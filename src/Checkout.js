@@ -15,6 +15,10 @@ function Checkout() {
         setCart([...cart, item]);
       }
 
+    const removeFromCart = (item) => {
+        setCart(cart.filter(cartItem => cartItem.id !== item.id));
+    }
+
     return (
         <div>
             <h1>PharmaPay</h1>
@@ -28,6 +32,15 @@ function Checkout() {
             ))}
 
             <h2>Cart</h2>
+
+            {cart.map(item => (
+                <div key={item.id}>
+                <h3>{item.name}</h3>
+                <p>Price: {item.price}</p>
+                <button onClick={() => removeFromCart(item)}>Remove</button>
+                </div>
+            ))}
+            
             <button>Complete Sale</button>
         </div>
     )
