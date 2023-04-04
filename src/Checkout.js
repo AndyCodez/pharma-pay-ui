@@ -4,7 +4,9 @@ function Checkout() {
 
     const [inventory, setInventory] = useState([]);
     const [cart, setCart] = useState([]);
+    const [billId, setBillId] = useState(0);
     const [customers, setCustomers] = useState([]);
+    const [selectedCustomerId, setSelectedCustomerId] = useState(0);
     const [searchCustomersTerm, setSearchCustomersTerm] = useState("");
 
     useEffect(() => {
@@ -32,31 +34,41 @@ function Checkout() {
         setCart(cart.filter(cartItem => cartItem.id !== item.id));
     }
 
-    const completeSale = () => {
-        // const data = {
-        //   cart: cart,
-        // }
+    const createBill = () => {
         const data = cart;
-    
+
         fetch('http://localhost:8080/api/v1/bills', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(data)
-        }).then(response => {
-          // Clear cart and update inventory after successful checkout
-          setCart([]);
-        //   setInventory(response.json());
+        })
+        .then(response => response.json())
+        .then(data => {
+          setBillId(data.id)
+          setCart([])
         });
       }
 
-      console.log(customers)
       const filteredCustomers = customers.filter(customer =>
         customer.firstName.toLowerCase().includes(searchCustomersTerm.toLowerCase()) ||
         customer.lastName.toLowerCase().includes(searchCustomersTerm.toLowerCase())
       );
-      
+
+      const addCustomerToBill = () => {
+
+        fetch('http://localhost:8080/api/v1/add-bill-to-customer/customers/' + selectedCustomerId + '/bills/' + billId, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          setSelectedCustomerId(0)
+        });
+      }
     return (
         <div>
             <h1>PharmaPay</h1>
@@ -77,15 +89,14 @@ function Checkout() {
                 value={searchCustomersTerm}
                 onChange={(e) => setSearchCustomersTerm(e.target.value)}
               />
-              <select>
+              <select onChange={(e) => setSelectedCustomerId(e.target.value)}>
                 {filteredCustomers.map((customer) => (
                   <option key={customer.id} value={customer.id}>
                     {customer.firstName} {customer.lastName}
                   </option>
                 ))}
               </select>
-              {/* <button onClick={() => linkCustomerBill(item)}>Select Customer</button> */}
-              <button>Select Customer</button>
+              <button onClick={() => addCustomerToBill()}>Select Customer</button>
             </div>
             <h2>Cart</h2>
 
@@ -96,7 +107,7 @@ function Checkout() {
                 <button onClick={() => removeFromCart(item)}>Remove</button>
                 </div>
             ))}
-            <button onClick={() => completeSale()}>Complete Sale</button>
+            <button onClick={() => createBill()}>Create Bill</button>
         </div>
     )
 }
