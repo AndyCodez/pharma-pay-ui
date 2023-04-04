@@ -72,6 +72,14 @@ function Checkout() {
           setBill(data)
         });
       }
+
+      const completeSale = () => {
+        fetch('http://localhost:8080/api/v1/complete-sale/bills/' + billId, {
+          method: 'PUT',
+          headers: {'Content-Type': 'application/json'}
+        }).then(response => response.json())
+      }
+
     return (
         <div>
             <h1>PharmaPay</h1>
@@ -112,21 +120,27 @@ function Checkout() {
             ))}
             <button onClick={() => createBill()}>Create Bill</button>
 
-            <h2>Bill</h2>
-            <div>
-              <h4>Date {bill.billDateTime}</h4>
-              {bill.soldItems.map(item => (
-                <div>
-                  <p>{item.name} - {item.quantity}</p>
-                </div>
-              ))
-              }
-              <h4>{bill.amount}</h4>
-              { bill.customer ? (
-                <h4>{bill.customer.firstName} {bill.customer.lastName}</h4>
-              ): null }
+            {bill ? (
+            <>
+              <h2>Bill</h2>
+              <div>
+                <h4>Date {bill.billDateTime}</h4>
+                {bill.soldItems.map(item => (
+                  <div>
+                    <p>{item.name} - {item.quantity}</p>
+                  </div>
+                ))
+                }
+                <h4>{bill.amount}</h4>
+                { bill.customer ? (
+                  <h4>{bill.customer.firstName} {bill.customer.lastName}</h4>
+                ): null }
 
-            </div>
+                <button onClick={() => completeSale()}>Complete sale</button>
+              </div>
+            </>
+
+            ) : null }
         </div>
     )
 }
