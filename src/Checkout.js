@@ -5,6 +5,7 @@ function Checkout() {
     const [inventory, setInventory] = useState([]);
     const [cart, setCart] = useState([]);
     const [billId, setBillId] = useState(0);
+    const [bill, setBill] = useState({soldItems: []});
     const [customers, setCustomers] = useState([]);
     const [selectedCustomerId, setSelectedCustomerId] = useState(0);
     const [searchCustomersTerm, setSearchCustomersTerm] = useState("");
@@ -47,6 +48,7 @@ function Checkout() {
         .then(response => response.json())
         .then(data => {
           setBillId(data.id)
+          setBill(data)
           setCart([])
         });
       }
@@ -67,6 +69,7 @@ function Checkout() {
         .then(response => response.json())
         .then(data => {
           setSelectedCustomerId(0)
+          setBill(data)
         });
       }
     return (
@@ -108,6 +111,22 @@ function Checkout() {
                 </div>
             ))}
             <button onClick={() => createBill()}>Create Bill</button>
+
+            <h2>Bill</h2>
+            <div>
+              <h4>Date {bill.billDateTime}</h4>
+              {bill.soldItems.map(item => (
+                <div>
+                  <p>{item.name} - {item.quantity}</p>
+                </div>
+              ))
+              }
+              <h4>{bill.amount}</h4>
+              { bill.customer ? (
+                <h4>{bill.customer.firstName} {bill.customer.lastName}</h4>
+              ): null }
+
+            </div>
         </div>
     )
 }
