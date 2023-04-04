@@ -4,11 +4,20 @@ function Checkout() {
 
     const [inventory, setInventory] = useState([]);
     const [cart, setCart] = useState([]);
+    const [customers, setCustomers] = useState([]);
+    const [searchCustomersTerm, setSearchCustomersTerm] = useState("");
 
     useEffect(() => {
         fetch('http://localhost:8080/api/v1/stock-items')
           .then(response => response.json())
           .then(data => setInventory(data));
+
+        fetch('http://localhost:8080/api/v1/customers')
+          .then(response => response.json())
+          .then(data => {
+            setCustomers(data.customers)
+          });
+
       }, []);
 
     const addToCart = (item) => {
@@ -42,6 +51,12 @@ function Checkout() {
         });
       }
 
+      console.log(customers)
+      const filteredCustomers = customers.filter(customer =>
+        customer.firstName.toLowerCase().includes(searchCustomersTerm.toLowerCase()) ||
+        customer.lastName.toLowerCase().includes(searchCustomersTerm.toLowerCase())
+      );
+      
     return (
         <div>
             <h1>PharmaPay</h1>
@@ -54,6 +69,24 @@ function Checkout() {
                 </div>
             ))}
 
+            <h2>Customers</h2>
+            <div>
+              <input
+                type="text"
+                placeholder="Search items..."
+                value={searchCustomersTerm}
+                onChange={(e) => setSearchCustomersTerm(e.target.value)}
+              />
+              <select>
+                {filteredCustomers.map((customer) => (
+                  <option key={customer.id} value={customer.id}>
+                    {customer.firstName} {customer.lastName}
+                  </option>
+                ))}
+              </select>
+              {/* <button onClick={() => linkCustomerBill(item)}>Select Customer</button> */}
+              <button>Select Customer</button>
+            </div>
             <h2>Cart</h2>
 
             {cart.map(item => (
