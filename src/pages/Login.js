@@ -1,6 +1,8 @@
 import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthProvider";
+import axios from "../api/axios";
 
+const LOGIN_URL = '/auth';
 
 function Login () {
     const { setAuth } = useContext(AuthContext);
@@ -16,9 +18,30 @@ function Login () {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        setEmail('');
-        setPassword('');
-        setSuccess(true);
+        try {
+            const response = 
+            await axios.post(
+                LOGIN_URL, 
+                JSON.stringify(
+                    {email, password}), 
+                    {headers: {'Content-Type': 'application/json'},
+                    withCredentials: true
+                });
+
+            const authToken = response?.data?.authToken;
+            setAuth({ email, password, authToken })
+
+            setEmail('');
+            setPassword('');
+            setSuccess(true);            
+        } catch (err) {
+            if (!err?.response) {
+                setErrorMessage('No Server Response');
+            } else if (err.response?.status === 400) {
+                setErrorMessage(err.response.errorMessages);
+            }
+        }
+
     }
 
     useEffect(() => {
