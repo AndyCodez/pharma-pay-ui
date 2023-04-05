@@ -2,7 +2,7 @@ import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthProvider";
 import axios from "../api/axios";
 
-const LOGIN_URL = '/auth';
+const LOGIN_URL = '/auth/sign-in';
 
 function Login () {
     const { setAuth } = useContext(AuthContext);
@@ -27,7 +27,6 @@ function Login () {
                     {headers: {'Content-Type': 'application/json'},
                     withCredentials: true
                 });
-
             const authToken = response?.data?.authToken;
             setAuth({ email, password, authToken })
 
