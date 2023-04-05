@@ -1,13 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
+import { Link, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <Login />
-    </div>
+    <>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/cart"> Cart </Link>
+            <Link to="/login"> Login </Link>
+          </li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path='/cart' element={<Checkout/>} />
+        <Route path='/login' element={<Login />} />
+      </Routes>    
+    </>
   );
 }
 
