@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import AuthContext from '../context/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
+import { useAuth } from '../context/AuthProvider';
 
 function Checkout() {
-    const { auth } = useContext(AuthContext);
+    const { auth } = useAuth();
 
     const { authToken, isAuthenticated } = auth;
     const navigate = useNavigate();
