@@ -1,11 +1,14 @@
 import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthProvider";
 import axios from "../api/axios";
+import { redirect, RedirectFunction, useNavigate } from "react-router-dom";
 
 const LOGIN_URL = '/auth/sign-in';
 
 function Login () {
     const { setAuth } = useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     const userRef = useRef();
     const errRef = useRef();
@@ -28,11 +31,13 @@ function Login () {
                     withCredentials: true
                 });
             const authToken = response?.data?.authToken;
-            setAuth({ email, password, authToken })
+            
+            setAuth({ email, password, authToken, isAuthenticated: true })
 
             setEmail('');
             setPassword('');
-            setSuccess(true);            
+            setSuccess(true);           
+            navigate("/cart") 
         } catch (err) {
             if (!err?.response) {
                 setErrorMessage('No Server Response');
@@ -50,6 +55,10 @@ function Login () {
     useEffect(() => {
         setErrorMessage();
     }, [email, password])
+
+    // if (success) {
+    //     na
+    // }
 
     return (
         <>
