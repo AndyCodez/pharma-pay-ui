@@ -32,8 +32,6 @@ function Checkout() {
     fetchCustomers();
   }, []);
 
-  useEffect(() => {}, []);
-
   const fetchInventory = async () => {
     const response = await axios.get(`${apiVersion}/stock-items`, {
       headers: {
@@ -58,6 +56,7 @@ function Checkout() {
 
   const removeFromCart = (item) => {
     setCart(cart.filter((cartItem) => cartItem.name !== item.name));
+    setErrorMessage("");
   };
 
   const createBill = async () => {
@@ -78,6 +77,7 @@ function Checkout() {
       setBillId(response.data.id);
       setBill(response.data);
       setCart([]);
+      scrollToBottom();
     } catch (err) {
       const errorResponse = JSON.parse(JSON.stringify(err?.response?.data));
       setErrorMessage(errorResponse.errorMessages);
@@ -126,10 +126,18 @@ function Checkout() {
 
     setBill({ soldItems: [] });
     fetchInventory();
+    setErrorMessage("");
   };
 
   const discardBill = () => {
     setBill({ soldItems: [] });
+  };
+
+  const scrollToBottom = () => {
+    window.scroll({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -144,7 +152,7 @@ function Checkout() {
           <div className="min-h-screen bg-gray-100 flex flex-col">
             <main className="flex-grow flex flex-col md:flex-row">
               <section className="bg-white shadow-lg flex-grow p-4">
-                <Inventory />
+                <Inventory bill={bill} />
               </section>
 
               <aside className="bg-white shadow-lg p-4 md:w-96">
