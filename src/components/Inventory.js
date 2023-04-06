@@ -10,6 +10,7 @@ function Inventory() {
   const addToCart = (item) => {
     const cartItem = {
       name: item.name,
+      price: item.price,
       quantity: buyQty,
     };
     setCart([...cart, cartItem]);
