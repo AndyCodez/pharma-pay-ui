@@ -2,6 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import { useAuth } from "../context/AuthProvider";
+import Cart from "../components/Cart";
+import Bill from "../components/Bill";
+import Customers from "../components/Customers";
+import Inventory from "../components/Inventory";
 
 function Checkout() {
   const { auth } = useAuth();
@@ -86,17 +90,22 @@ function Checkout() {
   );
 
   const addCustomerToBill = async () => {
-    const response = await axios.post(
-      "/add-bill-to-customer/customers/" +
-        selectedCustomerId +
-        "/bills/" +
-        billId,
-      {},
-      { headers: { Authorization: `Bearer ${authToken}` } }
-    );
-
-    setSelectedCustomerId(0);
-    setBill(response.data);
+    try {
+      const response = await axios.post(
+        "/add-bill-to-customer/customers/" +
+          selectedCustomerId +
+          "/bills/" +
+          billId,
+        {},
+        { headers: { Authorization: `Bearer ${authToken}` } }
+      );
+      setSelectedCustomerId(0);
+      setBill(response.data);
+    } catch (err) {
+      if (err?.response) {
+        console.log(err.response);
+      }
+    }
   };
 
   const completeSale = async () => {
@@ -121,78 +130,26 @@ function Checkout() {
       {isAuthenticated ? (
         <div>
           <h1>PharmaPay</h1>
-          <h2>Inventory</h2>
-          <div>
-            {inventory.map((item) => (
-              <div key={item.id}>
-                <h3>{item.name}</h3>
-                <p>Price: {item.price}</p>
-                <p>Remaining: {item.quantity}</p>
-                <input
-                  type="number"
-                  value={buyQty}
-                  min="1"
-                  max={item.quantity}
-                  onChange={handleQtyChange}
-                />
-                <button onClick={() => addToCart(item)}>Add to Cart</button>
-              </div>
-            ))}
-          </div>
+          <Inventory
+            inventory={inventory}
+            buyQty={buyQty}
+            handleQtyChange={handleQtyChange}
+            addToCart={addToCart}
+          />
 
-          <h2>Customers</h2>
-          <div>
-            <input
-              type="text"
-              placeholder="Search items..."
-              value={searchCustomersTerm}
-              onChange={(e) => setSearchCustomersTerm(e.target.value)}
-            />
-            <select onChange={(e) => setSelectedCustomerId(e.target.value)}>
-              {filteredCustomers.map((customer) => (
-                <option key={customer.id} value={customer.id}>
-                  {customer.firstName} {customer.lastName}
-                </option>
-              ))}
-            </select>
-            <button onClick={() => addCustomerToBill()}>Select Customer</button>
-          </div>
-          <h2>Cart</h2>
-          <div>
-            {cart.map((item) => (
-              <div key={item.name}>
-                <h3>{item.name}</h3>
-                <p>Price: {item.price}</p>
-                <p>Qty: {item.quantity}</p>
-                <button onClick={() => removeFromCart(item)}>Remove</button>
-              </div>
-            ))}
-          </div>
+          <Customers
+            filteredCustomers={filteredCustomers}
+            searchCustomersTerm={searchCustomersTerm}
+            setSearchCustomersTerm={setSearchCustomersTerm}
+            setSelectedCustomerId={setSelectedCustomerId}
+            addCustomerToBill={addCustomerToBill}
+          />
+
+          <Cart cart={cart} removeFromCart={removeFromCart} />
+
           <button onClick={() => createBill()}>Create Bill</button>
 
-          {bill ? (
-            <>
-              <h2>Bill</h2>
-              <div>
-                <h4>Date {bill.billDateTime}</h4>
-                {bill.soldItems.map((item) => (
-                  <div>
-                    <p>
-                      {item.name} - {item.quantity}
-                    </p>
-                  </div>
-                ))}
-                <h4>{bill.amount}</h4>
-                {bill.customer ? (
-                  <h4>
-                    {bill.customer.firstName} {bill.customer.lastName}
-                  </h4>
-                ) : null}
-
-                <button onClick={() => completeSale()}>Complete sale</button>
-              </div>
-            </>
-          ) : null}
+          <Bill bill={bill} completeSale={completeSale} />
         </div>
       ) : null}
     </>
