@@ -2,30 +2,39 @@ import React from "react";
 
 function Bill({ bill, completeSale }) {
   return (
-    <div>
+    <div className="bg-white shadow-md rounded-md p-6">
       {bill ? (
         <>
-          <h2>Bill</h2>
-          <div>
-            <h4>Date {bill.billDateTime}</h4>
+          <h2 className="text-2xl font-bold mb-4">Bill</h2>
+          <div className="mb-4">
+            <h4 className="text-lg font-semibold mb-2">
+              Date {bill.billDateTime}
+            </h4>
             {bill.soldItems.map((item) => (
               <div key={item.id}>
-                <p>
+                <p className="mb-1">
                   {item.name} - {item.quantity}
                 </p>
               </div>
             ))}
-            <h4>{bill.amount}</h4>
+            <h4 className="text-lg font-semibold mt-4">{bill.amount}</h4>
             {bill.customer ? (
-              <h4>
+              <h4 className="text-lg font-semibold mt-4">
                 {bill.customer.firstName} {bill.customer.lastName}
               </h4>
             ) : null}
-
-            <button onClick={() => completeSale()}>Complete sale</button>
           </div>
+
+          <button
+            onClick={() => completeSale()}
+            className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm"
+          >
+            Complete Sale
+          </button>
         </>
-      ) : null}
+      ) : (
+        <p>No bill to display</p>
+      )}
     </div>
   );
 }

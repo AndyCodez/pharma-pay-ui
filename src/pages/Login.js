@@ -62,17 +62,22 @@ function Login() {
   return (
     <>
       {success ? (
-        <div>
-          <h1>Logged in!</h1>
+        <div className="p-4 bg-green-100">
+          <h1 className="text-lg font-semibold text-green-700">Logged in!</h1>
         </div>
       ) : (
-        <div>
-          <p ref={errRef} className={errorMessage ? "errorMessage" : "none"}>
+        <div className="p-4">
+          <p
+            ref={errRef}
+            className={`${errorMessage ? "text-red-500" : "hidden"} mb-2`}
+          >
             {errorMessage}
           </p>
-          <h1>Sign In</h1>
+          <h1 className="text-lg font-semibold mb-2">Sign In</h1>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email" className="block mb-1 font-semibold">
+              Email
+            </label>
             <input
               type="email"
               id="email"
@@ -80,9 +85,12 @@ function Login() {
               onChange={(e) => setEmail(e.target.value)}
               value={email}
               required
+              className="w-full border-gray-300 rounded-sm py-2 px-3 mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
 
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password" className="block mb-1 font-semibold">
+              Password
+            </label>
             <input
               type="password"
               id="password"
@@ -90,9 +98,15 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               required
+              className="w-full border-gray-300 rounded-sm py-2 px-3 mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
 
-            <button>Sign In</button>
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Sign In
+            </button>
           </form>
         </div>
       )}

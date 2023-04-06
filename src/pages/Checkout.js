@@ -119,22 +119,42 @@ function Checkout() {
   return (
     <>
       {isAuthenticated ? (
-        <div>
-          <h1>PharmaPay</h1>
-          <Inventory />
+        <div className="min-h-screen bg-gray-100 flex flex-col">
+          <header className="bg-white shadow">
+            <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+              <h1 className="text-3xl font-bold text-gray-800">PharmaPay</h1>
+              <button
+                onClick={() => createBill()}
+                className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm"
+              >
+                Create Bill
+              </button>
+            </div>
+          </header>
 
-          <Cart cart={cart} removeFromCart={removeFromCart} />
+          <main className="flex-grow flex flex-col md:flex-row">
+            <section className="bg-white shadow-lg flex-grow p-4">
+              <h2 className="text-xl font-semibold mb-4">Inventory</h2>
+              <Inventory />
+            </section>
 
-          <button onClick={() => createBill()}>Create Bill</button>
+            <aside className="bg-white shadow-lg p-4 md:w-96">
+              <Cart cart={cart} removeFromCart={removeFromCart} />
+            </aside>
+          </main>
 
-          <Bill bill={bill} completeSale={completeSale} />
+          <footer className="bg-white shadow mt-auto">
+            <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+              <Bill bill={bill} completeSale={completeSale} />
 
-          <Customers
-            filteredCustomers={filteredCustomers}
-            searchCustomersTerm={searchCustomersTerm}
-            setSearchCustomersTerm={setSearchCustomersTerm}
-            addCustomerToBill={addCustomerToBill}
-          />
+              <Customers
+                filteredCustomers={filteredCustomers}
+                searchCustomersTerm={searchCustomersTerm}
+                setSearchCustomersTerm={setSearchCustomersTerm}
+                addCustomerToBill={addCustomerToBill}
+              />
+            </div>
+          </footer>
         </div>
       ) : null}
     </>
