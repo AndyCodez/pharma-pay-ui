@@ -16,6 +16,7 @@ function Checkout() {
   const [customers, setCustomers] = useState([]);
   const [selectedCustomerId, setSelectedCustomerId] = useState(0);
   const [searchCustomersTerm, setSearchCustomersTerm] = useState("");
+  const [buyQty, setBuyQty] = useState(1);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -50,7 +51,7 @@ function Checkout() {
   const addToCart = (item) => {
     const cartItem = {
       name: item.name,
-      quantity: item.quantity,
+      quantity: buyQty,
     };
     setCart([...cart, cartItem]);
   };
@@ -114,19 +115,34 @@ function Checkout() {
     }).then((response) => response.json());
   };
 
+  const handleQtyChange = (event) => {
+    setBuyQty(parseInt(event.target.value));
+  };
+
   return (
     <>
       {isAuthenticated ? (
         <div>
           <h1>PharmaPay</h1>
           <h2>Inventory</h2>
+          <div>
+            {console.log(inventory)}
           {inventory.map((item) => (
             <div key={item.id}>
               <h3>{item.name}</h3>
               <p>Price: {item.price}</p>
+              <p>Remaining: {item.quantity}</p>
+              <input
+                type="number"
+                value={buyQty} 
+                min="1" 
+                max={item.quantity}
+                onChange={handleQtyChange}
+              />
               <button onClick={() => addToCart(item)}>Add to Cart</button>
             </div>
           ))}
+          </div>
 
           <h2>Customers</h2>
           <div>
@@ -146,14 +162,16 @@ function Checkout() {
             <button onClick={() => addCustomerToBill()}>Select Customer</button>
           </div>
           <h2>Cart</h2>
-
+          <div>
           {cart.map((item) => (
             <div key={item.name}>
               <h3>{item.name}</h3>
               <p>Price: {item.price}</p>
+              <p>Qty: {item.quantity}</p>
               <button onClick={() => removeFromCart(item)}>Remove</button>
             </div>
           ))}
+          </div>
           <button onClick={() => createBill()}>Create Bill</button>
 
           {bill ? (
