@@ -4,11 +4,12 @@ import Checkout from "./pages/Checkout";
 import Inventory from "./pages/Inventory";
 import Login from "./pages/Login";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import Signup from "./pages/Signup";
 
 function App() {
   const { auth, setAuth } = useAuth();
 
-  const { isAuthenticated } = auth;
+  const { isAuthenticated, role } = auth;
 
   const navigate = useNavigate();
 
@@ -24,15 +25,27 @@ function App() {
           <li className="mx-4">
             {isAuthenticated ? (
               <>
-                <Link to="/checkout" className="text-white hover:text-gray-300">
+                <Link to="/checkout" className="m-4 text-white hover:text-gray-300">
                   Checkout
                 </Link>
-                <Link
-                  to="/inventory"
-                  className="text-white hover:text-gray-300 mx-4"
-                >
-                  Manage Inventory
-                </Link>
+
+                {role === "ADMIN" ? (
+                  <>
+                    <Link
+                      to="/inventory"
+                      className="text-white hover:text-gray-300 mx-4"
+                    >
+                      Manage Inventory
+                    </Link>
+
+                    <Link
+                      to="/signup"
+                      className="text-white hover:text-gray-300 mx-4"
+                    >
+                      Pharmacists
+                    </Link>
+                  </>
+                ) : (null)}
 
                 <a
                   onClick={handleLogout}
@@ -56,6 +69,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </>
   );

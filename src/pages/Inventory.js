@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 import { useCart } from "../context/CartProvider";
 import { useAuth } from "../context/AuthProvider";
+import { useNavigate } from "react-router";
 
 const Inventory = () => {
   const { auth } = useAuth();
-  const { authToken } = auth;
+  const { authToken, role } = auth;
+
+  const navigate = useNavigate();
 
   const { inventory, setInventory, setErrorMessage, errorMessage } = useCart();
 
@@ -20,6 +23,11 @@ const Inventory = () => {
   const apiVersion = "/api/v1";
 
   useEffect(() => {
+    if (!authToken || role !== "ADMIN") {
+      navigate("/login");
+      return;
+    }
+
     setErrorMessage("");
   });
 

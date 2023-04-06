@@ -33,8 +33,9 @@ function Login() {
         }
       );
       const authToken = response?.data?.authToken;
+      const role = response?.data?.userRole;
 
-      setAuth({ email, password, authToken, isAuthenticated: true });
+      setAuth({ email, authToken, isAuthenticated: true, role });
 
       setEmail("");
       setPassword("");

@@ -1,114 +1,172 @@
-// import { useRef, useState, useEffect, useContext } from "react";
-// import AuthContext from "../context/AuthProvider";
-// import axios from "../api/axios";
+import { useRef, useState, useEffect } from "react";
+import axios from "../api/axios";
+import { useAuth } from "../context/AuthProvider";
+import { useNavigate } from "react-router";
+import { useCart } from "../context/CartProvider";
 
-// const LOGIN_URL = '/auth';
+const apiVersion = "/api/v1";
 
-// function Signup () {
-//     const { setAuth } = useContext(AuthContext);
+const SIGNUP_URL = `${apiVersion}/pharmacists`;
 
-//     const userRef = useRef();
-//     const errRef = useRef();
+function Signup() {
+  const { auth } = useAuth();
+  const { authToken, role } = auth;
+  const { errorMessage, setErrorMessage } = useCart();
 
-//     const [email, setEmail] = useState('');
-//     const [password, setPassword] = useState('');
-//     const [errorMessage, setErrorMessage] = useState('');
-//     const [success, setSuccess] = useState(false);
+  const userRef = useRef();
+  const errRef = useRef();
 
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
+  const navigate = useNavigate();
 
-//         try {
-//             const response =
-//             await axios.post(
-//                 LOGIN_URL,
-//                 JSON.stringify(
-//                     {email, password}),
-//                     {headers: {'Content-Type': 'application/json'},
-//                     withCredentials: true
-//                 });
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userRole, setUserRole] = useState("");
+  const [success, setSuccess] = useState(false);
 
-//             const authToken = response?.data?.authToken;
-//             setAuth({ email, password, authToken })
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-//             setEmail('');
-//             setPassword('');
-//             setSuccess(true);
-//         } catch (err) {
-//             if (!err?.response) {
-//                 setErrorMessage('No Server Response');
-//             } else if (err.response?.status === 400) {
-//                 setErrorMessage(err.response.errorMessages);
-//             }
-//         }
+    try {
+      const response = await axios.post(
+        SIGNUP_URL,
+        JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+          role: role.toUpperCase(),
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+          withCredentials: true,
+        }
+      );
 
-//     }
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+      setUserRole("");
+      setSuccess(true);
+    } catch (err) {
+      if (!err?.response) {
+        setErrorMessage("No Server Response");
+      } else if (err.response?.status === 400) {
+        setErrorMessage(err.response.errorMessages);
+      }
+    }
+  };
 
-//     useEffect(() => {
-//         userRef.current.focus();
-//     }, [])
+  // console.log(role)
 
-//     useEffect(() => {
-//         setErrorMessage();
-//     }, [email, password])
+  useEffect(() => {
+    if (!authToken || role !== "ADMIN") {
+      navigate("/login");
+      return;
+    }
+    userRef.current.focus();
+    setErrorMessage("");
+  }, []);
 
-//     return (
-//         <>
-//             {success ? (
-//                 <div>
-//                     <h1>Logged in!</h1>
-//                 </div>
+  useEffect(() => {
+    setErrorMessage("");
+  }, [firstName, lastName, email, password, role]);
 
-//             ) : (
-//                 <div>
-//                     <p ref={errRef} className={errorMessage ? "errorMessage" : "none"}>{errorMessage}</p>
-//                     <h1>Register</h1>
-//                     <form onSubmit={handleSubmit}>
-//                         <label htmlFor="firstName">First Name</label>
-//                         <input
-//                             type="text"
-//                             id="firstName"
-//                             ref={userRef}
-//                             onChange={(e) => setFirstName(e.target.value)}
-//                             value={firstName}
-//                             required
-//                         />
+  return (
+    <>
+      {authToken && role === "ADMIN" ? (
+        <div className="max-w-lg mx-auto">
+          <p ref={errRef} className={errorMessage ? "errorMessage" : "hidden"}>
+            {errorMessage}
+          </p>
+          <h1 className="text-2xl font-bold mb-4 text-center">
+            Register Pharmacist
+          </h1>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="firstName" className="block font-medium mb-1">
+                First Name
+              </label>
+              <input
+                type="text"
+                id="firstName"
+                onChange={(e) => setFirstName(e.target.value)}
+                value={firstName}
+                ref={userRef}
+                required
+                className="w-full px-3 py-2 rounded-lg border-gray-300 shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
+              />
+            </div>
 
-//                         <label htmlFor="lastName">Last Name</label>
-//                         <input
-//                             type="text"
-//                             id="lastName"
-//                             onChange={(e) => setLastName(e.target.value)}
-//                             value={lastName}
-//                             required
-//                         />
+            <div>
+              <label htmlFor="lastName" className="block font-medium mb-1">
+                Last Name
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                onChange={(e) => setLastName(e.target.value)}
+                value={lastName}
+                required
+                className="w-full px-3 py-2 rounded-lg border-gray-300 shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
+              />
+            </div>
 
-//                         <label htmlFor="email">Email</label>
-//                         <input
-//                             type="email"
-//                             id="email"
-//                             ref={userRef}
-//                             onChange={(e) => setEmail(e.target.value)}
-//                             value={email}
-//                             required
-//                         />
+            <div>
+              <label htmlFor="email" className="block font-medium mb-1">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                required
+                className="w-full px-3 py-2 rounded-lg border-gray-300 shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
+              />
+            </div>
 
-//                         <label htmlFor="password">Password</label>
-//                         <input
-//                             type="password"
-//                             id="password"
-//                             ref={userRef}
-//                             onChange={(e) => setPassword(e.target.value)}
-//                             value={password}
-//                             required
-//                         />
+            <div>
+              <label htmlFor="password" className="block font-medium mb-1">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                required
+                className="w-full px-3 py-2 rounded-lg border-gray-300 shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
+              />
+            </div>
 
-//                         <button>Sign In</button>
-//                     </form>
-//                 </div>
-//             )}
-//         </>
-//     )
-// }
+            <div>
+              <label htmlFor="role" className="block font-medium mb-1">
+                Role
+              </label>
+              <input
+                type="text"
+                id="role"
+                onChange={(e) => setUserRole(e.target.value)}
+                value={userRole}
+                required
+                className="w-full px-3 py-2 rounded-lg border-gray-300 shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
+              />
+            </div>
 
-// export default Signup;
+            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
+              Register Pharmacist
+            </button>
+          </form>
+        </div>
+      ) : null}
+    </>
+  );
+}
+
+export default Signup;

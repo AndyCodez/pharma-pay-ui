@@ -26,6 +26,7 @@ function Checkout() {
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
+      return;
     }
 
     fetchInventory();
