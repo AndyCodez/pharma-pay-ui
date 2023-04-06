@@ -39,7 +39,7 @@ function Login() {
       setEmail("");
       setPassword("");
       setSuccess(true);
-      navigate(`${apiVersion}/cart`);
+      navigate("/checkout");
     } catch (err) {
       if (!err?.response) {
         setErrorMessage("No Server Response");

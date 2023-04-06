@@ -13,7 +13,7 @@ function App() {
 
   const handleLogout = () => {
     setAuth({});
-    navigate("/api/v1/login");
+    navigate("/login");
   };
 
   return (
@@ -23,21 +23,21 @@ function App() {
           <li>
             {isAuthenticated ? (
               <>
-                <Link to="/api/v1/cart"> Cart </Link>
+                <Link to="/checkout"> Checkout </Link>
 
                 <a onClick={handleLogout} href="#">
                   Sign Out
                 </a>
               </>
             ) : (
-              <Link to="/api/v1/login"> Login </Link>
+              <Link to="/login"> Login </Link>
             )}
           </li>
         </ul>
       </nav>
       <Routes>
-        <Route path="/api/v1/cart" element={<Checkout />} />
-        <Route path="/api/v1/login" element={<Login />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </>
   );

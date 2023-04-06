@@ -25,7 +25,7 @@ function Checkout() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate(`${apiVersion}/login`);
+      navigate("/login");
     }
 
     fetchInventory();
