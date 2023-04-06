@@ -14,7 +14,7 @@ function App() {
   const handleLogout = () => {
     setAuth({});
     navigate("/login");
-  } 
+  };
 
   return (
     <>
@@ -23,13 +23,15 @@ function App() {
           <li>
             {isAuthenticated ? (
               <>
-              <Link to="/cart"> Cart </Link>
+                <Link to="/cart"> Cart </Link>
 
-              <a onClick={handleLogout} href="#">Sign Out</a>
+                <a onClick={handleLogout} href="#">
+                  Sign Out
+                </a>
               </>
             ) : (
               <Link to="/login"> Login </Link>
-            ) } 
+            )}
           </li>
         </ul>
       </nav>

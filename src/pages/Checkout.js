@@ -63,11 +63,16 @@ function Checkout() {
   const createBill = async () => {
     const data = cart;
 
-  const response = await axios.post("/bills", JSON.stringify(data), { headers: {"Content-Type": "application/json", "Authorization": `Bearer ${authToken}`} });
+    const response = await axios.post("/bills", JSON.stringify(data), {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
 
-  setBillId(response.data.id)
-  setBill(response.data)
-  setCart([])
+    setBillId(response.data.id);
+    setBill(response.data);
+    setCart([]);
   };
 
   const filteredCustomers = customers.filter(
@@ -81,19 +86,25 @@ function Checkout() {
   );
 
   const addCustomerToBill = async () => {
-
-    const response = axios.post("/add-bill-to-customer/customers/" +
-    selectedCustomerId +
-    "/bills/" +
-    billId,{headers: {"Authorization": `Bearer ${authToken}`}});
+    const response = axios.post(
+      "/add-bill-to-customer/customers/" +
+        selectedCustomerId +
+        "/bills/" +
+        billId,
+      { headers: { Authorization: `Bearer ${authToken}` } }
+    );
 
     setSelectedCustomerId(0);
     setBill(response.data);
   };
 
   const completeSale = async () => {
-    const response = axios.put("/complete-sale/bills/" + billId, { headers: { "Content-Type": "application/json", "Authorization": `Bearer ${authToken}` } });
-
+    const response = axios.put("/complete-sale/bills/" + billId, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
   };
 
   const handleQtyChange = (event) => {
@@ -108,21 +119,21 @@ function Checkout() {
           <h2>Inventory</h2>
           <div>
             {console.log(inventory)}
-          {inventory.map((item) => (
-            <div key={item.id}>
-              <h3>{item.name}</h3>
-              <p>Price: {item.price}</p>
-              <p>Remaining: {item.quantity}</p>
-              <input
-                type="number"
-                value={buyQty} 
-                min="1" 
-                max={item.quantity}
-                onChange={handleQtyChange}
-              />
-              <button onClick={() => addToCart(item)}>Add to Cart</button>
-            </div>
-          ))}
+            {inventory.map((item) => (
+              <div key={item.id}>
+                <h3>{item.name}</h3>
+                <p>Price: {item.price}</p>
+                <p>Remaining: {item.quantity}</p>
+                <input
+                  type="number"
+                  value={buyQty}
+                  min="1"
+                  max={item.quantity}
+                  onChange={handleQtyChange}
+                />
+                <button onClick={() => addToCart(item)}>Add to Cart</button>
+              </div>
+            ))}
           </div>
 
           <h2>Customers</h2>
@@ -144,14 +155,14 @@ function Checkout() {
           </div>
           <h2>Cart</h2>
           <div>
-          {cart.map((item) => (
-            <div key={item.name}>
-              <h3>{item.name}</h3>
-              <p>Price: {item.price}</p>
-              <p>Qty: {item.quantity}</p>
-              <button onClick={() => removeFromCart(item)}>Remove</button>
-            </div>
-          ))}
+            {cart.map((item) => (
+              <div key={item.name}>
+                <h3>{item.name}</h3>
+                <p>Price: {item.price}</p>
+                <p>Qty: {item.quantity}</p>
+                <button onClick={() => removeFromCart(item)}>Remove</button>
+              </div>
+            ))}
           </div>
           <button onClick={() => createBill()}>Create Bill</button>
 
