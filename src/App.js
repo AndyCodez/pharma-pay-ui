@@ -19,24 +19,38 @@ function App() {
 
   return (
     <>
-      <nav>
-        <ul>
-          <li>
+      <nav className="bg-blue-800 p-4">
+        <ul className="flex justify-end">
+          <li className="mx-4">
             {isAuthenticated ? (
               <>
-                <Link to="/checkout"> Checkout </Link>
-                <Link to="/inventory"> Manage Inventory </Link>
+                <Link to="/checkout" className="text-white hover:text-gray-300">
+                  Checkout
+                </Link>
+                <Link
+                  to="/inventory"
+                  className="text-white hover:text-gray-300 mx-4"
+                >
+                  Manage Inventory
+                </Link>
 
-                <a onClick={handleLogout} href="#">
+                <a
+                  onClick={handleLogout}
+                  href="#"
+                  className="text-white hover:text-gray-300"
+                >
                   Sign Out
                 </a>
               </>
             ) : (
-              <Link to="/login"> Login </Link>
+              <Link to="/login" className="text-white hover:text-gray-300">
+                Login
+              </Link>
             )}
           </li>
         </ul>
       </nav>
+
       <Routes>
         <Route path="/inventory" element={<Inventory />} />
         <Route path="/checkout" element={<Checkout />} />
