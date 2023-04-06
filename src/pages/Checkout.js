@@ -7,11 +7,19 @@ import Bill from "../components/Bill";
 import Customers from "../components/Customers";
 import Inventory from "../components/Inventory";
 import { useCart } from "../context/CartProvider";
+import Notification from "../components/Notification";
 
 function Checkout() {
   const { auth } = useAuth();
-  const { cart, setCart, setInventory, setErrorMessage, errorMessage } =
-    useCart();
+  const {
+    cart,
+    setCart,
+    setInventory,
+    setErrorMessage,
+    errorMessage,
+    showNotification,
+    setShowNotification,
+  } = useCart();
 
   const { authToken, isAuthenticated } = auth;
   const navigate = useNavigate();
@@ -82,6 +90,7 @@ function Checkout() {
     } catch (err) {
       const errorResponse = JSON.parse(JSON.stringify(err?.response?.data));
       setErrorMessage(errorResponse.errorMessages);
+      setShowNotification(true);
     }
   };
 
@@ -126,6 +135,7 @@ function Checkout() {
     );
 
     setBill({ soldItems: [] });
+    setCart([]);
     fetchInventory();
     setErrorMessage("");
   };
@@ -143,6 +153,13 @@ function Checkout() {
 
   return (
     <>
+      {errorMessage ? (
+        <Notification
+          message={errorMessage}
+          show={showNotification}
+          setShow={setShowNotification}
+        />
+      ) : null}
       {isAuthenticated ? (
         <>
           <header className="bg-white shadow">

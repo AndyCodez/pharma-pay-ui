@@ -9,7 +9,7 @@ function Inventory({ bill }) {
     cart,
     setCart,
     setErrorMessage,
-    errorMessage,
+    setShowNotification,
   } = useCart();
 
   const [searchInventoryTerms, setSearchInventoryTerms] = useState("");
@@ -22,6 +22,8 @@ function Inventory({ bill }) {
     if (bill.soldItems.length >= 1) {
       scrollToBottom();
       setErrorMessage("You need to close or discard the current bill first");
+      setShowNotification(true);
+      return;
     }
     const cartItem = {
       name: item.name,

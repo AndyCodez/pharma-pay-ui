@@ -25,7 +25,10 @@ function App() {
           <li className="mx-4">
             {isAuthenticated ? (
               <>
-                <Link to="/checkout" className="m-4 text-white hover:text-gray-300">
+                <Link
+                  to="/checkout"
+                  className="m-4 text-white hover:text-gray-300"
+                >
                   Checkout
                 </Link>
 
@@ -45,7 +48,7 @@ function App() {
                       Pharmacists
                     </Link>
                   </>
-                ) : (null)}
+                ) : null}
 
                 <a
                   onClick={handleLogout}

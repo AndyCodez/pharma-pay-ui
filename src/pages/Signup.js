@@ -3,6 +3,7 @@ import axios from "../api/axios";
 import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from "react-router";
 import { useCart } from "../context/CartProvider";
+import Notification from "../components/Notification";
 
 const apiVersion = "/api/v1";
 
@@ -11,7 +12,12 @@ const SIGNUP_URL = `${apiVersion}/pharmacists`;
 function Signup() {
   const { auth } = useAuth();
   const { authToken, role } = auth;
-  const { errorMessage, setErrorMessage } = useCart();
+  const {
+    errorMessage,
+    setErrorMessage,
+    showNotification,
+    setShowNotification,
+  } = useCart();
 
   const userRef = useRef();
   const errRef = useRef();
@@ -57,12 +63,13 @@ function Signup() {
       if (!err?.response) {
         setErrorMessage("No Server Response");
       } else if (err.response?.status === 400) {
-        setErrorMessage(err.response.errorMessages);
+        setErrorMessage(err.response.data.errorMessages);
+      } else {
+        setErrorMessage("Something went wrong. Please try again.");
       }
+      setShowNotification(true);
     }
   };
-
-  // console.log(role)
 
   useEffect(() => {
     if (!authToken || role !== "ADMIN") {
@@ -79,11 +86,15 @@ function Signup() {
 
   return (
     <>
+      {errorMessage ? (
+        <Notification
+          message={errorMessage}
+          show={showNotification}
+          setShow={setShowNotification}
+        />
+      ) : null}
       {authToken && role === "ADMIN" ? (
         <div className="max-w-lg mx-auto">
-          <p ref={errRef} className={errorMessage ? "errorMessage" : "hidden"}>
-            {errorMessage}
-          </p>
           <h1 className="text-2xl font-bold mb-4 text-center">
             Register Pharmacist
           </h1>

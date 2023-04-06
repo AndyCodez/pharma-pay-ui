@@ -3,6 +3,7 @@ import axios from "../api/axios";
 import { useCart } from "../context/CartProvider";
 import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from "react-router";
+import Notification from "../components/Notification";
 
 const Inventory = () => {
   const { auth } = useAuth();
@@ -10,7 +11,14 @@ const Inventory = () => {
 
   const navigate = useNavigate();
 
-  const { inventory, setInventory, setErrorMessage, errorMessage } = useCart();
+  const {
+    inventory,
+    setInventory,
+    setErrorMessage,
+    errorMessage,
+    showNotification,
+    setShowNotification,
+  } = useCart();
 
   const [itemName, setItemName] = useState("");
   const [editItemId, setEditItemId] = useState("");
@@ -42,8 +50,14 @@ const Inventory = () => {
       });
       setInventory(response.data);
     } catch (err) {
-      const errorResponse = JSON.parse(JSON.stringify(err?.response?.data));
-      setErrorMessage(errorResponse.errorMessages);
+      if (err?.response?.status === 400) {
+        const errorResponse = JSON.parse(JSON.stringify(err?.response?.data));
+        setErrorMessage(errorResponse.errorMessages);
+      } else {
+        setErrorMessage("Failed to load inventory");
+      }
+
+      setShowNotification(true);
     }
   };
 
@@ -81,6 +95,7 @@ const Inventory = () => {
       } else {
         setErrorMessage("Something went wrong. Please retry.");
       }
+      setShowNotification(true);
     }
   };
 
@@ -153,12 +168,16 @@ const Inventory = () => {
 
   return (
     <>
+      {errorMessage ? (
+        <Notification
+          message={errorMessage}
+          show={showNotification}
+          setShow={setShowNotification}
+        />
+      ) : null}
       <div className="p-4">
         <h1 className="text-3xl font-bold mb-4 text-center">PharmaPay</h1>
         <h1 className="text-2xl font-bold mb-4 text-center">Inventory</h1>
-        <p className={`text-red-500 ${errorMessage ? "block" : "hidden"} mb-2`}>
-          {errorMessage}
-        </p>
         {editItemId === "" ? (
           <form className="mb-4" onSubmit={handleCreateItem}>
             <div className="flex flex-wrap -mx-2 mb-4">

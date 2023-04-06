@@ -2,6 +2,8 @@ import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthProvider";
 import axios from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import Notification from "../components/Notification";
+import { useCart } from "../context/CartProvider";
 
 const apiVersion = "/api/v1";
 
@@ -9,11 +11,11 @@ const LOGIN_URL = `${apiVersion}/auth/sign-in`;
 
 function Login() {
   const { setAuth } = useContext(AuthContext);
+  const { showNotification, setShowNotification } = useCart();
 
   const navigate = useNavigate();
 
   const userRef = useRef();
-  const errRef = useRef();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -47,6 +49,7 @@ function Login() {
       } else {
         setErrorMessage("Incorrect Login Credentials");
       }
+      setShowNotification(true);
     }
   };
 
@@ -60,6 +63,13 @@ function Login() {
 
   return (
     <div className="flex justify-center items-center h-screen">
+      {errorMessage ? (
+        <Notification
+          message={errorMessage}
+          show={showNotification}
+          setShow={setShowNotification}
+        />
+      ) : null}
       <div className="p-4 bg-white shadow-lg rounded-lg w-full md:w-96">
         {success ? (
           <div className="p-4 bg-green-100">
@@ -70,12 +80,6 @@ function Login() {
             <div className="w-full mx-auto py-6 px-4 flex justify-center items-center">
               <h1 className="text-3xl font-bold text-gray-800">PharmaPay</h1>
             </div>
-            <p
-              ref={errRef}
-              className={`${errorMessage ? "text-red-500" : "hidden"} mb-2`}
-            >
-              {errorMessage}
-            </p>
             <h1 className="text-lg font-semibold mb-2">Sign In</h1>
             <form onSubmit={handleSubmit}>
               <label htmlFor="email" className="block mb-1 font-semibold">

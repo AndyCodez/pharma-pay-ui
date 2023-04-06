@@ -11,6 +11,7 @@ export const CartProvider = ({ children }) => {
   const [buyQty, setBuyQty] = useState(1);
   const [inventory, setInventory] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showNotification, setShowNotification] = useState(false);
 
   //   const values = { cart, setCart, buyQty, setBuyQty, inventory, setInventory }
 
@@ -25,6 +26,8 @@ export const CartProvider = ({ children }) => {
         setInventory,
         errorMessage,
         setErrorMessage,
+        showNotification,
+        setShowNotification,
       }}
     >
       {children}
