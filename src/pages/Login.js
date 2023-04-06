@@ -3,7 +3,9 @@ import AuthContext from "../context/AuthProvider";
 import axios from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
-const LOGIN_URL = "/auth/sign-in";
+const apiVersion = "/api/v1";
+
+const LOGIN_URL = `${apiVersion}/auth/sign-in`;
 
 function Login() {
   const { setAuth } = useContext(AuthContext);
@@ -37,7 +39,7 @@ function Login() {
       setEmail("");
       setPassword("");
       setSuccess(true);
-      navigate("/cart");
+      navigate(`${apiVersion}/cart`);
     } catch (err) {
       if (!err?.response) {
         setErrorMessage("No Server Response");

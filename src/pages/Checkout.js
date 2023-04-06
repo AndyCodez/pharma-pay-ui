@@ -21,19 +21,21 @@ function Checkout() {
   const [customers, setCustomers] = useState([]);
   const [searchCustomersTerm, setSearchCustomersTerm] = useState("");
 
+  const apiVersion = "/api/v1";
+
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate("/login");
+      navigate(`${apiVersion}/login`);
     }
 
     fetchInventory();
     fetchCustomers();
   }, []);
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const fetchInventory = async () => {
-    const response = await axios.get("/stock-items", {
+    const response = await axios.get(`${apiVersion}/stock-items`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${authToken}`,
@@ -44,7 +46,7 @@ function Checkout() {
   };
 
   const fetchCustomers = async () => {
-    const response = await axios.get("/customers", {
+    const response = await axios.get(`${apiVersion}/customers`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${authToken}`,
@@ -62,7 +64,7 @@ function Checkout() {
     const data = cart;
 
     try {
-      const response = await axios.post("/bills", JSON.stringify(data), {
+      const response = await axios.post(`${apiVersion}/bills`, JSON.stringify(data), {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${authToken}`,
@@ -91,10 +93,10 @@ function Checkout() {
   const addCustomerToBill = async (selectedCustomerId) => {
     try {
       const response = await axios.post(
-        "/add-bill-to-customer/customers/" +
-          selectedCustomerId +
-          "/bills/" +
-          billId,
+        `${apiVersion}/add-bill-to-customer/customers/` +
+        selectedCustomerId +
+        "/bills/" +
+        billId,
         {},
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
@@ -108,7 +110,7 @@ function Checkout() {
 
   const completeSale = async () => {
     const response = await axios.put(
-      "/complete-sale/bills/" + billId,
+      `${apiVersion}/complete-sale/bills/` + billId,
       {},
       {
         headers: {
