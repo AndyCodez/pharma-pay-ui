@@ -1,6 +1,6 @@
 import React from "react";
 
-function Bill({ bill, completeSale }) {
+function Bill({ bill, completeSale, discardBill }) {
   return (
     <div className="bg-white shadow-md rounded-md p-6">
       {bill ? (
@@ -30,6 +30,12 @@ function Bill({ bill, completeSale }) {
             className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm"
           >
             Complete Sale
+          </button>
+          <button
+            onClick={() => discardBill()}
+            className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm m-2"
+          >
+            Discard Bill
           </button>
         </>
       ) : (
