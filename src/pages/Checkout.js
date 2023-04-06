@@ -10,7 +10,7 @@ import { useCart } from "../context/CartProvider";
 
 function Checkout() {
   const { auth } = useAuth();
-  const { cart, setCart, setInventory } = useCart();
+  const { cart, setCart, setInventory, setErrorMessage, errorMessage } = useCart();
 
   const { authToken, isAuthenticated } = auth;
   const navigate = useNavigate();
@@ -60,16 +60,22 @@ function Checkout() {
   const createBill = async () => {
     const data = cart;
 
-    const response = await axios.post("/bills", JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${authToken}`,
-      },
-    });
+    try {
+      const response = await axios.post("/bills", JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+  
+      setBillId(response.data.id);
+      setBill(response.data);
+      setCart([]);
+    } catch(err) {
+        const errorResponse = JSON.parse(JSON.stringify(err?.response?.data));
+        setErrorMessage(errorResponse.errorMessages)
+    }
 
-    setBillId(response.data.id);
-    setBill(response.data);
-    setCart([]);
   };
 
   const filteredCustomers = customers.filter(

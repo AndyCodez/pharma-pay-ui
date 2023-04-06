@@ -1,8 +1,17 @@
+import { useCart } from "../context/CartProvider";
+
 function Cart({ cart, removeFromCart }) {
+    const { errorMessage } = useCart();
+
   return (
     <>
       <div className="bg-gray-100 px-6 py-8 w-full">
         <h2 className="text-2xl font-bold mb-4">Cart</h2>
+        <p
+              className={`${errorMessage ? "text-red-500" : "hidden"} mb-2`}
+            >
+              {errorMessage}
+            </p>
         <div className="grid grid-cols-1">
           {cart.map((item) => (
             <div
