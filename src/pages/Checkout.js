@@ -83,7 +83,7 @@ function Checkout() {
         .includes(searchCustomersTerm.toLowerCase())
   );
 
-  const addCustomerToBill = async () => {
+  const addCustomerToBill = async (selectedCustomerId) => {
     try {
       const response = await axios.post(
         "/add-bill-to-customer/customers/" +

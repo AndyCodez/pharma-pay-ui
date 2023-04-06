@@ -17,14 +17,19 @@ function Customers({
           value={searchCustomersTerm}
           onChange={(e) => setSearchCustomersTerm(e.target.value)}
         />
-        <select onChange={(e) => setSelectedCustomerId(e.target.value)}>
-          {filteredCustomers.map((customer) => (
-            <option key={customer.id} value={customer.id}>
-              {customer.firstName} {customer.lastName}
-            </option>
-          ))}
-        </select>
-        <button onClick={() => addCustomerToBill()}>Select Customer</button>
+
+        {filteredCustomers.map((customer) => (
+          <ul>
+            <li key={customer.id}>
+              <h3>
+                {customer.firstName} {customer.lastName}
+              </h3>
+              <button onClick={() => addCustomerToBill(customer.id)}>
+                Select Customer
+              </button>
+            </li>
+          </ul>
+        ))}
       </div>
     </div>
   );

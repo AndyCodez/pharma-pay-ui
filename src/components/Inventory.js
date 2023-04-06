@@ -19,17 +19,19 @@ function Inventory() {
     setCart([...cart, cartItem]);
   };
 
-  const filteredInventory = inventory.filter(item => item.name.toLowerCase().includes(searchInventoryTerms) )
+  const filteredInventory = inventory.filter((item) =>
+    item.name.toLowerCase().includes(searchInventoryTerms)
+  );
 
   return (
     <div>
       <h2>Inventory</h2>
       <input
-          type="text"
-          placeholder="Search inventory..."
-          value={searchInventoryTerms}
-          onChange={(e) => setSearchInventoryTerms(e.target.value)}
-        />
+        type="text"
+        placeholder="Search inventory..."
+        value={searchInventoryTerms}
+        onChange={(e) => setSearchInventoryTerms(e.target.value)}
+      />
       <div>
         {filteredInventory.map((item) => (
           <div key={item.id}>
