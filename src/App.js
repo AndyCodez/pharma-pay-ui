@@ -1,16 +1,35 @@
 import "./App.css";
+import { useAuth } from "./context/AuthProvider";
 import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 
 function App() {
+  const { auth, setAuth } = useAuth();
+
+  const { isAuthenticated } = auth;
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setAuth({});
+    navigate("/login");
+  } 
+
   return (
     <>
       <nav>
         <ul>
           <li>
-            <Link to="/cart"> Cart </Link>
-            <Link to="/login"> Login </Link>
+            {isAuthenticated ? (
+              <>
+              <Link to="/cart"> Cart </Link>
+
+              <a onClick={handleLogout} href="#">Sign Out</a>
+              </>
+            ) : (
+              <Link to="/login"> Login </Link>
+            ) } 
           </li>
         </ul>
       </nav>
