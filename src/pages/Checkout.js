@@ -18,7 +18,6 @@ function Checkout() {
   const [billId, setBillId] = useState(0);
   const [bill, setBill] = useState({ soldItems: [] });
   const [customers, setCustomers] = useState([]);
-  const [selectedCustomerId, setSelectedCustomerId] = useState(0);
   const [searchCustomersTerm, setSearchCustomersTerm] = useState("");
 
   useEffect(() => {
@@ -93,7 +92,6 @@ function Checkout() {
         {},
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
-      setSelectedCustomerId(0);
       setBill(response.data);
     } catch (err) {
       if (err?.response) {
@@ -132,7 +130,6 @@ function Checkout() {
             filteredCustomers={filteredCustomers}
             searchCustomersTerm={searchCustomersTerm}
             setSearchCustomersTerm={setSearchCustomersTerm}
-            setSelectedCustomerId={setSelectedCustomerId}
             addCustomerToBill={addCustomerToBill}
           />
         </div>

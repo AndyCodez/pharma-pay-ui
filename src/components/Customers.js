@@ -4,7 +4,6 @@ function Customers({
   filteredCustomers,
   searchCustomersTerm,
   setSearchCustomersTerm,
-  setSelectedCustomerId,
   addCustomerToBill,
 }) {
   return (
@@ -17,9 +16,8 @@ function Customers({
           value={searchCustomersTerm}
           onChange={(e) => setSearchCustomersTerm(e.target.value)}
         />
-
-        {filteredCustomers.map((customer) => (
-          <ul>
+        <ul>
+          {filteredCustomers.map((customer) => (
             <li key={customer.id}>
               <h3>
                 {customer.firstName} {customer.lastName}
@@ -28,8 +26,8 @@ function Customers({
                 Select Customer
               </button>
             </li>
-          </ul>
-        ))}
+          ))}
+        </ul>
       </div>
     </div>
   );
