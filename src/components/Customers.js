@@ -13,7 +13,7 @@ function Customers({
       <div>
         <input
           type="text"
-          placeholder="Search items..."
+          placeholder="Search customers..."
           value={searchCustomersTerm}
           onChange={(e) => setSearchCustomersTerm(e.target.value)}
         />
