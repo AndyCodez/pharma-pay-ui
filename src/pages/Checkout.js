@@ -86,11 +86,12 @@ function Checkout() {
   );
 
   const addCustomerToBill = async () => {
-    const response = axios.post(
+    const response = await axios.post(
       "/add-bill-to-customer/customers/" +
         selectedCustomerId +
         "/bills/" +
         billId,
+      {},
       { headers: { Authorization: `Bearer ${authToken}` } }
     );
 
@@ -99,12 +100,16 @@ function Checkout() {
   };
 
   const completeSale = async () => {
-    const response = axios.put("/complete-sale/bills/" + billId, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${authToken}`,
-      },
-    });
+    const response = await axios.put(
+      "/complete-sale/bills/" + billId,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
   };
 
   const handleQtyChange = (event) => {
@@ -118,7 +123,6 @@ function Checkout() {
           <h1>PharmaPay</h1>
           <h2>Inventory</h2>
           <div>
-            {console.log(inventory)}
             {inventory.map((item) => (
               <div key={item.id}>
                 <h3>{item.name}</h3>
