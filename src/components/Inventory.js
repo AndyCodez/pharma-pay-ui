@@ -2,7 +2,15 @@ import { useState } from "react";
 import { useCart } from "../context/CartProvider";
 
 function Inventory() {
-  const { inventory, buyQty, setBuyQty, cart, setCart, setErrorMessage, errorMessage } = useCart();
+  const {
+    inventory,
+    buyQty,
+    setBuyQty,
+    cart,
+    setCart,
+    setErrorMessage,
+    errorMessage,
+  } = useCart();
 
   const [searchInventoryTerms, setSearchInventoryTerms] = useState("");
 
@@ -11,7 +19,6 @@ function Inventory() {
   };
 
   const addToCart = (item) => {
-
     const cartItem = {
       name: item.name,
       price: item.price,

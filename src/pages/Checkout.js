@@ -10,7 +10,8 @@ import { useCart } from "../context/CartProvider";
 
 function Checkout() {
   const { auth } = useAuth();
-  const { cart, setCart, setInventory, setErrorMessage, errorMessage } = useCart();
+  const { cart, setCart, setInventory, setErrorMessage, errorMessage } =
+    useCart();
 
   const { authToken, isAuthenticated } = auth;
   const navigate = useNavigate();
@@ -67,15 +68,14 @@ function Checkout() {
           Authorization: `Bearer ${authToken}`,
         },
       });
-  
+
       setBillId(response.data.id);
       setBill(response.data);
       setCart([]);
-    } catch(err) {
-        const errorResponse = JSON.parse(JSON.stringify(err?.response?.data));
-        setErrorMessage(errorResponse.errorMessages)
+    } catch (err) {
+      const errorResponse = JSON.parse(JSON.stringify(err?.response?.data));
+      setErrorMessage(errorResponse.errorMessages);
     }
-
   };
 
   const filteredCustomers = customers.filter(
@@ -124,7 +124,7 @@ function Checkout() {
 
   const discardBill = () => {
     setBill({ soldItems: [] });
-  }
+  };
 
   return (
     <>
@@ -143,12 +143,14 @@ function Checkout() {
 
               <aside className="bg-white shadow-lg p-4 md:w-96">
                 <Cart cart={cart} removeFromCart={removeFromCart} />
-                {bill.soldItems.length === 0 ? (<button
-                  onClick={() => createBill()}
-                  className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm ml-20"
-                >
-                  Create Bill
-                </button>) : (null)}
+                {bill.soldItems.length === 0 ? (
+                  <button
+                    onClick={() => createBill()}
+                    className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm ml-20"
+                  >
+                    Create Bill
+                  </button>
+                ) : null}
               </aside>
             </main>
 
@@ -156,7 +158,11 @@ function Checkout() {
               {bill.soldItems.length >= 1 ? (
                 <>
                   <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
-                    <Bill bill={bill} completeSale={completeSale} discardBill={discardBill} />
+                    <Bill
+                      bill={bill}
+                      completeSale={completeSale}
+                      discardBill={discardBill}
+                    />
 
                     <Customers
                       filteredCustomers={filteredCustomers}
