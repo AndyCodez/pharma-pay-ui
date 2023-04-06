@@ -1,7 +1,7 @@
-import './App.css';
-import Checkout from './pages/Checkout';
-import Login from './pages/Login';
-import { Link, Route, Routes } from 'react-router-dom';
+import "./App.css";
+import Checkout from "./pages/Checkout";
+import Login from "./pages/Login";
+import { Link, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
@@ -15,9 +15,9 @@ function App() {
         </ul>
       </nav>
       <Routes>
-        <Route path='/cart' element={<Checkout/>} />
-        <Route path='/login' element={<Login />} />
-      </Routes>    
+        <Route path="/cart" element={<Checkout />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </>
   );
 }

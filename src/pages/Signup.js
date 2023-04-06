@@ -19,11 +19,11 @@
 //         e.preventDefault();
 
 //         try {
-//             const response = 
+//             const response =
 //             await axios.post(
-//                 LOGIN_URL, 
+//                 LOGIN_URL,
 //                 JSON.stringify(
-//                     {email, password}), 
+//                     {email, password}),
 //                     {headers: {'Content-Type': 'application/json'},
 //                     withCredentials: true
 //                 });
@@ -33,7 +33,7 @@
 
 //             setEmail('');
 //             setPassword('');
-//             setSuccess(true);            
+//             setSuccess(true);
 //         } catch (err) {
 //             if (!err?.response) {
 //                 setErrorMessage('No Server Response');
@@ -65,28 +65,27 @@
 //                     <h1>Register</h1>
 //                     <form onSubmit={handleSubmit}>
 //                         <label htmlFor="firstName">First Name</label>
-//                         <input 
-//                             type="text" 
+//                         <input
+//                             type="text"
 //                             id="firstName"
 //                             ref={userRef}
 //                             onChange={(e) => setFirstName(e.target.value)}
 //                             value={firstName}
 //                             required
 //                         />
-                        
+
 //                         <label htmlFor="lastName">Last Name</label>
-//                         <input 
-//                             type="text" 
+//                         <input
+//                             type="text"
 //                             id="lastName"
 //                             onChange={(e) => setLastName(e.target.value)}
 //                             value={lastName}
 //                             required
 //                         />
 
-
 //                         <label htmlFor="email">Email</label>
-//                         <input 
-//                             type="email" 
+//                         <input
+//                             type="email"
 //                             id="email"
 //                             ref={userRef}
 //                             onChange={(e) => setEmail(e.target.value)}
@@ -95,8 +94,8 @@
 //                         />
 
 //                         <label htmlFor="password">Password</label>
-//                         <input 
-//                             type="password" 
+//                         <input
+//                             type="password"
 //                             id="password"
 //                             ref={userRef}
 //                             onChange={(e) => setPassword(e.target.value)}
