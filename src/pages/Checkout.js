@@ -122,6 +122,12 @@ function Checkout() {
           <h1>PharmaPay</h1>
           <Inventory />
 
+          <Cart cart={cart} removeFromCart={removeFromCart} />
+
+          <button onClick={() => createBill()}>Create Bill</button>
+
+          <Bill bill={bill} completeSale={completeSale} />
+
           <Customers
             filteredCustomers={filteredCustomers}
             searchCustomersTerm={searchCustomersTerm}
@@ -129,12 +135,6 @@ function Checkout() {
             setSelectedCustomerId={setSelectedCustomerId}
             addCustomerToBill={addCustomerToBill}
           />
-
-          <Cart cart={cart} removeFromCart={removeFromCart} />
-
-          <button onClick={() => createBill()}>Create Bill</button>
-
-          <Bill bill={bill} completeSale={completeSale} />
         </div>
       ) : null}
     </>
