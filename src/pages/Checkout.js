@@ -111,6 +111,9 @@ function Checkout() {
         },
       }
     );
+
+    setBill({ soldItems: [] });
+
   };
 
   return (
