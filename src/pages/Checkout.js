@@ -6,29 +6,31 @@ import Cart from "../components/Cart";
 import Bill from "../components/Bill";
 import Customers from "../components/Customers";
 import Inventory from "../components/Inventory";
+import { useCart } from "../context/CartProvider";
 
 function Checkout() {
   const { auth } = useAuth();
+  const { cart, setCart, setInventory } = useCart();
 
   const { authToken, isAuthenticated } = auth;
   const navigate = useNavigate();
 
-  const [inventory, setInventory] = useState([]);
-  const [cart, setCart] = useState([]);
   const [billId, setBillId] = useState(0);
   const [bill, setBill] = useState({ soldItems: [] });
   const [customers, setCustomers] = useState([]);
   const [selectedCustomerId, setSelectedCustomerId] = useState(0);
   const [searchCustomersTerm, setSearchCustomersTerm] = useState("");
-  const [buyQty, setBuyQty] = useState(1);
 
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
     }
+
     fetchInventory();
     fetchCustomers();
   }, []);
+
+  useEffect(() => {}, []);
 
   const fetchInventory = async () => {
     const response = await axios.get("/stock-items", {
@@ -50,14 +52,6 @@ function Checkout() {
       withCredentials: true,
     });
     setCustomers(response.data.customers);
-  };
-
-  const addToCart = (item) => {
-    const cartItem = {
-      name: item.name,
-      quantity: buyQty,
-    };
-    setCart([...cart, cartItem]);
   };
 
   const removeFromCart = (item) => {
@@ -121,21 +115,12 @@ function Checkout() {
     );
   };
 
-  const handleQtyChange = (event) => {
-    setBuyQty(parseInt(event.target.value));
-  };
-
   return (
     <>
       {isAuthenticated ? (
         <div>
           <h1>PharmaPay</h1>
-          <Inventory
-            inventory={inventory}
-            buyQty={buyQty}
-            handleQtyChange={handleQtyChange}
-            addToCart={addToCart}
-          />
+          <Inventory />
 
           <Customers
             filteredCustomers={filteredCustomers}

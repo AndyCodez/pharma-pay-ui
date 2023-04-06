@@ -1,6 +1,20 @@
-import React from "react";
+import { useCart } from "../context/CartProvider";
 
-function Inventory({ inventory, buyQty, handleQtyChange, addToCart }) {
+function Inventory() {
+  const { inventory, buyQty, setBuyQty, cart, setCart } = useCart();
+
+  const handleQtyChange = (event) => {
+    setBuyQty(parseInt(event.target.value));
+  };
+
+  const addToCart = (item) => {
+    const cartItem = {
+      name: item.name,
+      quantity: buyQty,
+    };
+    setCart([...cart, cartItem]);
+  };
+
   return (
     <div>
       <h2>Inventory</h2>
