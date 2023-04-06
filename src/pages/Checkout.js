@@ -113,7 +113,7 @@ function Checkout() {
     );
 
     setBill({ soldItems: [] });
-
+    fetchInventory();
   };
 
   return (
