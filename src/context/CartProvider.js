@@ -1,6 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import Inventory from "../components/Inventory";
-import Checkout from "../pages/Checkout";
 
 const CartContext = createContext({});
 
@@ -13,13 +11,13 @@ export const CartProvider = ({ children }) => {
   const [buyQty, setBuyQty] = useState(1);
   const [inventory, setInventory] = useState([]);
 
+  //   const values = { cart, setCart, buyQty, setBuyQty, inventory, setInventory }
+
   return (
     <CartContext.Provider
       value={{ cart, setCart, buyQty, setBuyQty, inventory, setInventory }}
     >
       {children}
-      {/* <Inventory /> */}
-      {/* <Checkout /> */}
     </CartContext.Provider>
   );
 };

@@ -119,43 +119,47 @@ function Checkout() {
   return (
     <>
       {isAuthenticated ? (
-        <div className="min-h-screen bg-gray-100 flex flex-col">
+        <>
           <header className="bg-white shadow">
-            <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <div className="w-full mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
               <h1 className="text-3xl font-bold text-gray-800">PharmaPay</h1>
-              <button
-                onClick={() => createBill()}
-                className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm"
-              >
-                Create Bill
-              </button>
             </div>
           </header>
+          <div className="min-h-screen bg-gray-100 flex flex-col">
+            <main className="flex-grow flex flex-col md:flex-row">
+              <section className="bg-white shadow-lg flex-grow p-4">
+                <Inventory />
+              </section>
 
-          <main className="flex-grow flex flex-col md:flex-row">
-            <section className="bg-white shadow-lg flex-grow p-4">
-              <h2 className="text-xl font-semibold mb-4">Inventory</h2>
-              <Inventory />
-            </section>
+              <aside className="bg-white shadow-lg p-4 md:w-96">
+                <Cart cart={cart} removeFromCart={removeFromCart} />
+                <button
+                  onClick={() => createBill()}
+                  className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm ml-20"
+                >
+                  Create Bill
+                </button>
+              </aside>
+            </main>
 
-            <aside className="bg-white shadow-lg p-4 md:w-96">
-              <Cart cart={cart} removeFromCart={removeFromCart} />
-            </aside>
-          </main>
+            <footer className="bg-white shadow mt-auto">
+              {bill.soldItems.length >= 1 ? (
+                <>
+                  <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+                    <Bill bill={bill} completeSale={completeSale} />
 
-          <footer className="bg-white shadow mt-auto">
-            <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
-              <Bill bill={bill} completeSale={completeSale} />
-
-              <Customers
-                filteredCustomers={filteredCustomers}
-                searchCustomersTerm={searchCustomersTerm}
-                setSearchCustomersTerm={setSearchCustomersTerm}
-                addCustomerToBill={addCustomerToBill}
-              />
-            </div>
-          </footer>
-        </div>
+                    <Customers
+                      filteredCustomers={filteredCustomers}
+                      searchCustomersTerm={searchCustomersTerm}
+                      setSearchCustomersTerm={setSearchCustomersTerm}
+                      addCustomerToBill={addCustomerToBill}
+                    />
+                  </div>
+                </>
+              ) : null}
+            </footer>
+          </div>
+        </>
       ) : null}
     </>
   );

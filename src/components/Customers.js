@@ -7,7 +7,7 @@ function Customers({
   addCustomerToBill,
 }) {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
+    <div className="mx-auto max-w-4xl px-4 py-8 ">
       <h2 className="text-2xl font-bold mb-4">Customers</h2>
       <div className="flex flex-col md:flex-row justify-between items-center mb-4">
         <input
@@ -15,7 +15,7 @@ function Customers({
           placeholder="Search customers..."
           value={searchCustomersTerm}
           onChange={(e) => setSearchCustomersTerm(e.target.value)}
-          className="w-full md:w-1/2 rounded-lg border-gray-300 border py-2 px-4 focus:outline-none focus:border-blue-500"
+          className="w-full rounded-lg border-gray-300 border py-2 px-4 focus:outline-none focus:border-blue-500"
         />
       </div>
       <ul className="divide-y divide-gray-300">
