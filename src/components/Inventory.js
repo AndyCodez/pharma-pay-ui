@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useCart } from "../context/CartProvider";
 
-function Inventory() {
+function Inventory({ bill }) {
   const {
     inventory,
     buyQty,
@@ -19,6 +19,10 @@ function Inventory() {
   };
 
   const addToCart = (item) => {
+    if (bill.soldItems.length >= 1) {
+      scrollToBottom();
+      setErrorMessage("You need to close or discard the current bill first");
+    }
     const cartItem = {
       name: item.name,
       price: item.price,
@@ -31,6 +35,13 @@ function Inventory() {
   const filteredInventory = inventory.filter((item) =>
     item.name.toLowerCase().includes(searchInventoryTerms)
   );
+
+  const scrollToBottom = () => {
+    window.scroll({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <div className="bg-white p-8 w-full">
