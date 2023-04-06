@@ -54,7 +54,7 @@ function Checkout() {
   };
 
   const removeFromCart = (item) => {
-    setCart(cart.filter((cartItem) => cartItem.id !== item.id));
+    setCart(cart.filter((cartItem) => cartItem.name !== item.name));
   };
 
   const createBill = async () => {
