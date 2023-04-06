@@ -60,22 +60,14 @@ function Checkout() {
     setCart(cart.filter((cartItem) => cartItem.id !== item.id));
   };
 
-  const createBill = () => {
+  const createBill = async () => {
     const data = cart;
 
-    fetch("http://localhost:8080/api/v1/bills", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setBillId(data.id);
-        setBill(data);
-        setCart([]);
-      });
+  const response = await axios.post("/bills", JSON.stringify(data), { headers: {"Content-Type": "application/json", "Authorization": `Bearer ${authToken}`} });
+
+  setBillId(response.data.id)
+  setBill(response.data)
+  setCart([])
   };
 
   const filteredCustomers = customers.filter(
@@ -88,31 +80,20 @@ function Checkout() {
         .includes(searchCustomersTerm.toLowerCase())
   );
 
-  const addCustomerToBill = () => {
-    fetch(
-      "http://localhost:8080/api/v1/add-bill-to-customer/customers/" +
-        selectedCustomerId +
-        "/bills/" +
-        billId,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setSelectedCustomerId(0);
-        setBill(data);
-      });
+  const addCustomerToBill = async () => {
+
+    const response = axios.post("/add-bill-to-customer/customers/" +
+    selectedCustomerId +
+    "/bills/" +
+    billId,{headers: {"Authorization": `Bearer ${authToken}`}});
+
+    setSelectedCustomerId(0);
+    setBill(response.data);
   };
 
-  const completeSale = () => {
-    fetch("http://localhost:8080/api/v1/complete-sale/bills/" + billId, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-    }).then((response) => response.json());
+  const completeSale = async () => {
+    const response = axios.put("/complete-sale/bills/" + billId, { headers: { "Content-Type": "application/json", "Authorization": `Bearer ${authToken}` } });
+
   };
 
   const handleQtyChange = (event) => {
