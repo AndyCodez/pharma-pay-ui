@@ -32,7 +32,7 @@ function Checkout() {
     fetchCustomers();
   }, []);
 
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
 
   const fetchInventory = async () => {
     const response = await axios.get(`${apiVersion}/stock-items`, {
@@ -64,12 +64,16 @@ function Checkout() {
     const data = cart;
 
     try {
-      const response = await axios.post(`${apiVersion}/bills`, JSON.stringify(data), {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+      const response = await axios.post(
+        `${apiVersion}/bills`,
+        JSON.stringify(data),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
       setBillId(response.data.id);
       setBill(response.data);
@@ -94,9 +98,9 @@ function Checkout() {
     try {
       const response = await axios.post(
         `${apiVersion}/add-bill-to-customer/customers/` +
-        selectedCustomerId +
-        "/bills/" +
-        billId,
+          selectedCustomerId +
+          "/bills/" +
+          billId,
         {},
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
