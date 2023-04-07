@@ -87,6 +87,8 @@ function Checkout() {
       setBill(response.data);
       setCart([]);
       scrollToBottom();
+      setErrorMessage("A bill was created successfully.");
+      setShowNotification(true);
     } catch (err) {
       const errorResponse = JSON.parse(JSON.stringify(err?.response?.data));
       setErrorMessage(errorResponse.errorMessages);
@@ -108,13 +110,15 @@ function Checkout() {
     try {
       const response = await axios.post(
         `${apiVersion}/add-bill-to-customer/customers/` +
-          selectedCustomerId +
-          "/bills/" +
-          billId,
+        selectedCustomerId +
+        "/bills/" +
+        billId,
         {},
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
       setBill(response.data);
+      setErrorMessage("Successfully assigned bill to customer");
+      setShowNotification(true);
     } catch (err) {
       if (err?.response) {
         console.log(err.response);
@@ -137,7 +141,8 @@ function Checkout() {
     setBill({ soldItems: [] });
     setCart([]);
     fetchInventory();
-    setErrorMessage("");
+    setErrorMessage("Bill has been validated and completed.");
+    setShowNotification(true);
   };
 
   const discardBill = () => {

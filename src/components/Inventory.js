@@ -32,6 +32,8 @@ function Inventory({ bill }) {
     };
 
     setCart([...cart, cartItem]);
+    setErrorMessage("Item successfully added to cart");
+    setShowNotification(true);
   };
 
   const filteredInventory = inventory.filter((item) =>
