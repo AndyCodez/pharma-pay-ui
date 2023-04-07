@@ -14,7 +14,7 @@ const Inventory = () => {
   const {
     inventory,
     setInventory,
-    setErrorMessage,
+    setInfoMessage,
     errorMessage,
     showNotification,
     setShowNotification,
@@ -36,7 +36,7 @@ const Inventory = () => {
       return;
     }
 
-    setErrorMessage("");
+    setInfoMessage("");
   });
 
   const fetchInventory = async () => {
@@ -52,9 +52,9 @@ const Inventory = () => {
     } catch (err) {
       if (err?.response?.status === 400) {
         const errorResponse = JSON.parse(JSON.stringify(err?.response?.data));
-        setErrorMessage(errorResponse.errorMessages);
+        setInfoMessage(errorResponse.errorMessages);
       } else {
-        setErrorMessage("Failed to load inventory");
+        setInfoMessage("Failed to load inventory");
       }
 
       setShowNotification(true);
@@ -87,13 +87,13 @@ const Inventory = () => {
       setItemName("");
       setItemPrice("");
       setItemQuantity("");
-      setErrorMessage("");
+      setInfoMessage("");
     } catch (err) {
       if (err?.response?.status === 400) {
         const errorResponse = JSON.parse(JSON.stringify(err?.response?.data));
-        setErrorMessage(errorResponse.errorMessages);
+        setInfoMessage(errorResponse.errorMessages);
       } else {
-        setErrorMessage("Something went wrong. Please retry.");
+        setInfoMessage("Something went wrong. Please retry.");
       }
       setShowNotification(true);
     }
@@ -125,9 +125,9 @@ const Inventory = () => {
     } catch (err) {
       if (err?.response?.status === 400) {
         const errorResponse = JSON.parse(JSON.stringify(err?.response?.data));
-        setErrorMessage(errorResponse.errorMessages);
+        setInfoMessage(errorResponse.errorMessages);
       } else {
-        setErrorMessage("Something went wrong. Please retry.");
+        setInfoMessage("Something went wrong. Please retry.");
       }
     }
   };
@@ -159,7 +159,7 @@ const Inventory = () => {
 
   const emptyEditField = () => {
     populateEditField({ id: "", name: "", price: "", quantity: "" });
-    setErrorMessage("");
+    setInfoMessage("");
   };
 
   const scrollToTop = () => {

@@ -19,7 +19,7 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setInfoMessage] = useState("");
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -45,9 +45,9 @@ function Login() {
       navigate("/checkout");
     } catch (err) {
       if (!err?.response) {
-        setErrorMessage("No Server Response");
+        setInfoMessage("No Server Response");
       } else {
-        setErrorMessage("Incorrect Login Credentials");
+        setInfoMessage("Incorrect Login Credentials");
       }
       setShowNotification(true);
     }
@@ -58,7 +58,7 @@ function Login() {
   }, []);
 
   useEffect(() => {
-    setErrorMessage();
+    setInfoMessage();
   }, [email, password]);
 
   return (

@@ -8,7 +8,7 @@ function Inventory({ bill }) {
     setBuyQty,
     cart,
     setCart,
-    setErrorMessage,
+    setInfoMessage,
     setShowNotification,
   } = useCart();
 
@@ -21,7 +21,7 @@ function Inventory({ bill }) {
   const addToCart = (item) => {
     if (bill.soldItems.length >= 1) {
       scrollToBottom();
-      setErrorMessage("You need to close or discard the current bill first");
+      setInfoMessage("You need to close or discard the current bill first");
       setShowNotification(true);
       return;
     }
@@ -32,7 +32,7 @@ function Inventory({ bill }) {
     };
 
     setCart([...cart, cartItem]);
-    setErrorMessage("Item successfully added to cart");
+    setInfoMessage("Item successfully added to cart");
     setShowNotification(true);
   };
 

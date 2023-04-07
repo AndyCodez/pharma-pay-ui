@@ -14,7 +14,7 @@ function Signup() {
   const { authToken, role } = auth;
   const {
     errorMessage,
-    setErrorMessage,
+    setInfoMessage,
     showNotification,
     setShowNotification,
   } = useCart();
@@ -61,11 +61,11 @@ function Signup() {
       setSuccess(true);
     } catch (err) {
       if (!err?.response) {
-        setErrorMessage("No Server Response");
+        setInfoMessage("No Server Response");
       } else if (err.response?.status === 400) {
-        setErrorMessage(err.response.data.errorMessages);
+        setInfoMessage(err.response.data.errorMessages);
       } else {
-        setErrorMessage("Something went wrong. Please try again.");
+        setInfoMessage("Something went wrong. Please try again.");
       }
       setShowNotification(true);
     }
@@ -77,11 +77,11 @@ function Signup() {
       return;
     }
     userRef.current.focus();
-    setErrorMessage("");
+    setInfoMessage("");
   }, []);
 
   useEffect(() => {
-    setErrorMessage("");
+    setInfoMessage("");
   }, [firstName, lastName, email, password, role]);
 
   return (

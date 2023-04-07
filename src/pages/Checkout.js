@@ -15,7 +15,7 @@ function Checkout() {
     cart,
     setCart,
     setInventory,
-    setErrorMessage,
+    setInfoMessage,
     errorMessage,
     showNotification,
     setShowNotification,
@@ -65,7 +65,7 @@ function Checkout() {
 
   const removeFromCart = (item) => {
     setCart(cart.filter((cartItem) => cartItem.name !== item.name));
-    setErrorMessage("");
+    setInfoMessage("");
   };
 
   const createBill = async () => {
@@ -87,11 +87,11 @@ function Checkout() {
       setBill(response.data);
       setCart([]);
       scrollToBottom();
-      setErrorMessage("A bill was created successfully.");
+      setInfoMessage("A bill was created successfully.");
       setShowNotification(true);
     } catch (err) {
       const errorResponse = JSON.parse(JSON.stringify(err?.response?.data));
-      setErrorMessage(errorResponse.errorMessages);
+      setInfoMessage(errorResponse.errorMessages);
       setShowNotification(true);
     }
   };
@@ -117,7 +117,7 @@ function Checkout() {
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
       setBill(response.data);
-      setErrorMessage("Successfully assigned bill to customer");
+      setInfoMessage("Successfully assigned bill to customer");
       setShowNotification(true);
     } catch (err) {
       if (err?.response) {
@@ -141,7 +141,7 @@ function Checkout() {
     setBill({ soldItems: [] });
     setCart([]);
     fetchInventory();
-    setErrorMessage("Bill has been validated and completed.");
+    setInfoMessage("Bill has been validated and completed.");
     setShowNotification(true);
   };
 
