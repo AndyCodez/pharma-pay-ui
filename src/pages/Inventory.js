@@ -15,7 +15,7 @@ const Inventory = () => {
     inventory,
     setInventory,
     setInfoMessage,
-    errorMessage,
+    infoMessage,
     showNotification,
     setShowNotification,
   } = useCart();
@@ -168,9 +168,9 @@ const Inventory = () => {
 
   return (
     <>
-      {errorMessage ? (
+      {infoMessage ? (
         <Notification
-          message={errorMessage}
+          message={infoMessage}
           show={showNotification}
           setShow={setShowNotification}
         />

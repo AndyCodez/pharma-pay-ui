@@ -13,7 +13,7 @@ function Signup() {
   const { auth } = useAuth();
   const { authToken, role } = auth;
   const {
-    errorMessage,
+    infoMessage,
     setInfoMessage,
     showNotification,
     setShowNotification,
@@ -86,9 +86,9 @@ function Signup() {
 
   return (
     <>
-      {errorMessage ? (
+      {infoMessage ? (
         <Notification
-          message={errorMessage}
+          message={infoMessage}
           show={showNotification}
           setShow={setShowNotification}
         />

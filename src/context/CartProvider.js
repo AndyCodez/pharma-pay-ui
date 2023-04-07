@@ -10,7 +10,7 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [buyQty, setBuyQty] = useState(1);
   const [inventory, setInventory] = useState([]);
-  const [errorMessage, setInfoMessage] = useState("");
+  const [infoMessage, setInfoMessage] = useState("");
   const [showNotification, setShowNotification] = useState(false);
 
   //   const values = { cart, setCart, buyQty, setBuyQty, inventory, setInventory }
@@ -24,7 +24,7 @@ export const CartProvider = ({ children }) => {
         setBuyQty,
         inventory,
         setInventory,
-        errorMessage,
+        infoMessage,
         setInfoMessage,
         showNotification,
         setShowNotification,

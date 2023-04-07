@@ -19,7 +19,7 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setInfoMessage] = useState("");
+  const [infoMessage, setInfoMessage] = useState("");
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -63,9 +63,9 @@ function Login() {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      {errorMessage ? (
+      {infoMessage ? (
         <Notification
-          message={errorMessage}
+          message={infoMessage}
           show={showNotification}
           setShow={setShowNotification}
         />

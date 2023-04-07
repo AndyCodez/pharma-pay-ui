@@ -16,7 +16,7 @@ function Checkout() {
     setCart,
     setInventory,
     setInfoMessage,
-    errorMessage,
+    infoMessage,
     showNotification,
     setShowNotification,
   } = useCart();
@@ -158,9 +158,9 @@ function Checkout() {
 
   return (
     <>
-      {errorMessage ? (
+      {infoMessage ? (
         <Notification
-          message={errorMessage}
+          message={infoMessage}
           show={showNotification}
           setShow={setShowNotification}
         />
