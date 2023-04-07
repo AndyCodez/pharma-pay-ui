@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+# PharmaPay
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+PharmaPay is a checkout system similar to what you would find in pharmacies, complete with a frontend interface for managing inventory items and a way to sell said inventory items.
 
-## Available Scripts
+### Key URLs
 
-In the project directory, you can run:
+1. Live site: https://pharma-pay-ui.vercel.app
+2. Backend API (Spring Boot): https://github.com/AndyCodez/pharma-pay
 
-### `npm start`
+## Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+PharmaPay consists of two separate applications: a backend built in Spring Boot and a frontend built in React JS. The backend provides a set of REST APIs to manage the inventory items, bills, and users. The frontend provides an intuitive and easy-to-use interface for managing the inventory items, selling them to customers, and tracking the sales history.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The system is designed with three types of users in mind: pharmacists, customers with an account, and customers without an account. The customers are indirect users of the account i.e only pharmacists interact directly with the system.
 
-### `npm test`
+## Key Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Inventory Management
+The system allows pharmacists to create, update, delete, and archive inventory items. The inventory items can be searched through for quick finding.
 
-### `npm run build`
+### Sales Management
+The system allows pharmacists to sell inventory items to customers. Customers can make a purchase either by logging in to their account or by making a guest purchase. The system provides an intuitive and easy-to-use interface for selling items, and generating bills.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### User Management
+The system allows admin pharmacists to create and manage user accounts, with different permissions and roles. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Security and Authentication
+The system is designed with security in mind, using modern authentication and authorization techniques to protect the user's data. The system uses Spring Security + JWT to handle authentication and authorization. There are different levels of access for different user types.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The pharamacists have different set of permissions and actions they can perform. The roles are ADMIN, and NORMAL_PHARMACIST.
 
-### `npm run eject`
+### Normal Pharmacists' permissions
+Manage sales. Includes creating and validating bills.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Admin permissions
+Only admins can create, update, and delete inventory. 
+Only admins can register other pharmacists. 
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Test Suites and Audit Trail
+The system has been built with a comprehensive set of test suites, including unit tests,and integration tests. The system also provides an audit trail that tracks all changes to the database, enhancing monitoring of the system's usage and preventing unauthorized access.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Acceptance Testing
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The system is intentionally built to restrict registration and new pharmacist accounts can only be created by admin users.
 
-## Learn More
+To sign in as the admin user:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+email: johndoe@example.com
+password: password123
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To sign in as a normal user:
 
-### Code Splitting
+```
+email: brondoe@example.com
+password: password123
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Installation
 
-### Analyzing the Bundle Size
+### Backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. Clone the backend repository using the following command:
 
-### Making a Progressive Web App
+`git clone https://github.com/AndyCodez/pharma-pay`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+2. Setup the environment variables in the application.properties files 
 
-### Advanced Configuration
+3. Install the required dependencies:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+`mvn clean install`
 
-### Deployment
+4. Start the server by running:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+`mvn spring-boot:run`
 
-### `npm run build` fails to minify
+### Frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Clone this repository: 
+
+`git clone https://github.com/AndyCodez/pharma-pay-ui`
+
+2. Rename .env.local.example to .env.local and edit the url to match the port number of the Spring Boot application.
+
+3. Install the required packages by running:
+
+`npm install`
+
+4. Start the server by running:
+
+`npm start`
+
+## Testing
+
+The backend is extensively tested:
+
+You can run the tests with `mvn test`
+ 
+
