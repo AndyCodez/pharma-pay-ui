@@ -64,7 +64,13 @@ function Inventory({ bill }) {
         {filteredInventory.map((item) => (
           <div key={item.id} className="bg-gray-100 rounded-lg p-4 shadow-md">
             <h3 className="text-xl font-bold mb-2">{item.name}</h3>
-            <p className="mb-2">Price: {item.price}</p>
+            <p className="mb-2">
+              Price:{" "}
+              {item.price.toLocaleString("en-US", {
+                style: "currency",
+                currency: "KES",
+              })}
+            </p>
             <p className="mb-2">Remaining: {item.quantity}</p>
             <div className="flex items-center mb-2">
               <input

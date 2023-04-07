@@ -8,7 +8,7 @@ function Bill({ bill, completeSale, discardBill }) {
           <h2 className="text-2xl font-bold mb-4">Bill</h2>
           <div className="mb-4">
             <h4 className="text-lg font-semibold mb-2">
-              Date {bill.billDateTime}
+              Date: {new Date(bill.billDateTime).toLocaleString()}
             </h4>
             {bill.soldItems.map((item) => (
               <div key={item.id}>
@@ -17,7 +17,12 @@ function Bill({ bill, completeSale, discardBill }) {
                 </p>
               </div>
             ))}
-            <h4 className="text-lg font-semibold mt-4">{bill.amount}</h4>
+            <h4 className="text-lg font-semibold mt-4">
+              {bill.amount.toLocaleString("en-US", {
+                style: "currency",
+                currency: "KES",
+              })}
+            </h4>
             {bill.customer ? (
               <h4 className="text-lg font-semibold mt-4">
                 {bill.customer.firstName} {bill.customer.lastName}
