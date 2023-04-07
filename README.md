@@ -16,28 +16,36 @@ The system is designed with three types of users in mind: pharmacists, customers
 ## Key Features
 
 ### Inventory Management
-The system allows pharmacists to create, update, delete, and archive inventory items. The inventory items can be searched through for quick finding.
+
+The system allows pharmacists to create, update, and delete inventory items. The inventory items can be searched through for quick finding.
 
 ### Sales Management
-The system allows pharmacists to sell inventory items to customers. Customers can make a purchase either by logging in to their account or by making a guest purchase. The system provides an intuitive and easy-to-use interface for selling items, and generating bills.
+
+The system allows pharmacists to sell inventory items to customers. A bill can optionally be assigned to a customer. Think of this as the ability to have over the counter transactions. The system provides an intuitive and easy-to-use interface for selling items, and generating bills.
 
 ### User Management
+
 The system allows admin pharmacists to create and manage user accounts, with different permissions and roles. 
 
 ### Security and Authentication
-The system is designed with security in mind, using modern authentication and authorization techniques to protect the user's data. The system uses Spring Security + JWT to handle authentication and authorization. There are different levels of access for different user types.
+
+The system is designed with security in mind, using modern authentication and authorization techniques. The system uses Spring Security + JWT to handle authentication and authorization. There are different levels of access for different user types.
 
 The pharamacists have different set of permissions and actions they can perform. The roles are ADMIN, and NORMAL_PHARMACIST.
 
 ### Normal Pharmacists' permissions
+
 Manage sales. Includes creating and validating bills.
 
 ### Admin permissions
+
+Manage sales. Includes creating and validating bills.
 Only admins can create, update, and delete inventory. 
 Only admins can register other pharmacists. 
 
 ### Test Suites and Audit Trail
-The system has been built with a comprehensive set of test suites, including unit tests,and integration tests. The system also provides an audit trail that tracks all changes to the database, enhancing monitoring of the system's usage and preventing unauthorized access.
+
+The system has been built with a comprehensive set of test suites, including unit tests, and integration tests. The system also provides an audit trail that tracks all changes to the database, enhancing monitoring of the system's usage and preventing unauthorized access.
 
 ## Acceptance Testing
 
