@@ -110,9 +110,9 @@ function Checkout() {
     try {
       const response = await axios.post(
         `${apiVersion}/add-bill-to-customer/customers/` +
-        selectedCustomerId +
-        "/bills/" +
-        billId,
+          selectedCustomerId +
+          "/bills/" +
+          billId,
         {},
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
@@ -146,15 +146,12 @@ function Checkout() {
   };
 
   const discardBill = async () => {
-    const response = await axios.delete(
-      `${apiVersion}/bills/` + billId,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-      }
-    );
+    const response = await axios.delete(`${apiVersion}/bills/` + billId, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
 
     setBill({ soldItems: [] });
     setCart([]);

@@ -12,12 +12,8 @@ const SIGNUP_URL = `${apiVersion}/pharmacists`;
 function Signup() {
   const { auth } = useAuth();
   const { authToken, role } = auth;
-  const {
-    infoMessage,
-    setInfoMessage,
-    showNotification,
-    setShowNotification,
-  } = useCart();
+  const { infoMessage, setInfoMessage, showNotification, setShowNotification } =
+    useCart();
 
   const userRef = useRef();
   const errRef = useRef();

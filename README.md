@@ -25,7 +25,7 @@ The system allows pharmacists to sell inventory items to customers. A bill can o
 
 ### User Management
 
-The system allows admin pharmacists to create and manage user accounts, with different permissions and roles. 
+The system allows admin pharmacists to create and manage user accounts, with different permissions and roles.
 
 ### Security and Authentication
 
@@ -40,8 +40,8 @@ Manage sales. Includes creating and validating bills.
 ### Admin permissions
 
 Manage sales. Includes creating and validating bills.
-Only admins can create, update, and delete inventory. 
-Only admins can register other pharmacists. 
+Only admins can create, update, and delete inventory.
+Only admins can register other pharmacists.
 
 ### Test Suites and Audit Trail
 
@@ -73,7 +73,7 @@ password: password123
 
 `git clone https://github.com/AndyCodez/pharma-pay`
 
-2. Setup the environment variables in the application.properties files 
+2. Setup the environment variables in the application.properties files
 
 3. Install the required dependencies:
 
@@ -85,7 +85,7 @@ password: password123
 
 ### Frontend
 
-1. Clone this repository: 
+1. Clone this repository:
 
 `git clone https://github.com/AndyCodez/pharma-pay-ui`
 
@@ -104,5 +104,3 @@ password: password123
 The backend is extensively tested:
 
 You can run the tests with `mvn test`
- 
-

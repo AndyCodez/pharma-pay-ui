@@ -35,7 +35,6 @@ const Inventory = () => {
       navigate("/login");
       return;
     }
-
   });
 
   const fetchInventory = async () => {
@@ -87,7 +86,7 @@ const Inventory = () => {
       setItemPrice("");
       setItemQuantity("");
 
-      setInfoMessage("Item added successfully")
+      setInfoMessage("Item added successfully");
       setShowNotification(true);
     } catch (err) {
       if (err?.response?.status === 400) {
