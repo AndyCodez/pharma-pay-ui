@@ -24,65 +24,76 @@ function App() {
 
   return (
     <>
-      <nav className="bg-blue-800 p-4">
-        <ul className="flex justify-end">
-          <li className="mx-4">
-            {isAuthenticated ? (
-              <>
-                <Link
-                  to="/checkout"
-                  className="m-4 text-white hover:text-gray-300"
-                >
-                  Checkout
+      <nav className="bg-blue-800 p-4 flex justify-between">
+        <div>
+          <ul>
+            <li className="mx-4">
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    to="/checkout"
+                    className="m-4 text-white hover:text-gray-300"
+                  >
+                    Checkout
+                  </Link>
+
+                  {role === "ADMIN" ? (
+                    <>
+                      <Link
+                        to="/inventory"
+                        className="text-white hover:text-gray-300 mx-4"
+                      >
+                        Manage Inventory
+                      </Link>
+
+                      <Link
+                        to="/signup"
+                        className="text-white hover:text-gray-300 mx-4"
+                      >
+                        Pharmacists
+                      </Link>
+
+                      <Link
+                        to="/customers"
+                        className="text-white hover:text-gray-300 mx-4"
+                      >
+                        Customers
+                      </Link>
+
+                      <Link
+                        to="/sales"
+                        className="text-white hover:text-gray-300 mx-4"
+                      >
+                        Sales
+                      </Link>
+                    </>
+                  ) : null}
+                </>
+              ) : null}
+            </li>
+          </ul>
+        </div>
+        <div className="flex justify-end">
+          <ul>
+            <li className="mx-4">
+              {isAuthenticated ? (
+                <>
+                  <a
+                    onClick={handleLogout}
+                    href="#"
+                    className="text-white hover:text-gray-300"
+                  >
+                    Sign Out
+                  </a>
+                </>
+              ) : (
+                <Link to="/login" className="text-white hover:text-gray-300">
+                  Login
                 </Link>
-
-                {role === "ADMIN" ? (
-                  <>
-                    <Link
-                      to="/inventory"
-                      className="text-white hover:text-gray-300 mx-4"
-                    >
-                      Manage Inventory
-                    </Link>
-
-                    <Link
-                      to="/signup"
-                      className="text-white hover:text-gray-300 mx-4"
-                    >
-                      Pharmacists
-                    </Link>
-
-                    <Link
-                      to="/customers"
-                      className="text-white hover:text-gray-300 mx-4"
-                    >
-                      Customers
-                    </Link>
-
-                    <Link
-                      to="/sales"
-                      className="text-white hover:text-gray-300 mx-4"
-                    >
-                      Sales
-                    </Link>
-                  </>
-                ) : null}
-
-                <a
-                  onClick={handleLogout}
-                  href="#"
-                  className="text-white hover:text-gray-300"
-                >
-                  Sign Out
-                </a>
-              </>
-            ) : (
-              <Link to="/login" className="text-white hover:text-gray-300">
-                Login
-              </Link>
-            )}
-          </li>
-        </ul>
+              )}
+            </li>
+          </ul>
+        </div>
       </nav>
 
       <Routes>
