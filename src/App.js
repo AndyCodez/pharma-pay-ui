@@ -8,6 +8,8 @@ import Signup from "./pages/Signup";
 import Customers from "./pages/Customers";
 
 function App() {
+  document.title = "PharmaPay";
+
   const { auth, setAuth } = useAuth();
 
   const { isAuthenticated, role } = auth;
