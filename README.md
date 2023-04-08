@@ -42,6 +42,8 @@ Manage sales. Includes creating and validating bills.
 Manage sales. Includes creating and validating bills.
 Only admins can create, update, and delete inventory.
 Only admins can register other pharmacists.
+Only admins can register customers.
+Only admins can view sales data.
 
 ### Test Suites and Audit Trail
 
