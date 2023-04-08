@@ -145,8 +145,21 @@ function Checkout() {
     setShowNotification(true);
   };
 
-  const discardBill = () => {
+  const discardBill = async () => {
+    const response = await axios.delete(
+      `${apiVersion}/bills/` + billId,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+
     setBill({ soldItems: [] });
+    setCart([]);
+    setInfoMessage("Bill has been discarded.");
+    setShowNotification(true);
   };
 
   const scrollToBottom = () => {
