@@ -270,6 +270,10 @@ const Inventory = () => {
             <th>Item name</th>
             <th>Price</th>
             <th>Quantity</th>
+            <th>Created By</th>
+            <th>Created On</th>
+            <th>Last Modified By</th>
+            <th>Last Modified On</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -279,6 +283,10 @@ const Inventory = () => {
               <td>{item.name}</td>
               <td>{item.price}</td>
               <td>{item.quantity}</td>
+              <td>{item.createdBy}</td>
+              <td>{new Date(item.createdDate).toLocaleString()}</td>
+              <td>{item.lastModifiedBy}</td>
+              <td>{new Date(item.lastModifiedDate).toLocaleString()}</td>
               <td>
                 <button
                   className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2"
