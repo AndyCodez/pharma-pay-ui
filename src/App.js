@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import Signup from "./pages/Signup";
 import Customers from "./pages/Customers";
+import Sales from "./pages/Sales";
 
 function App() {
   document.title = "PharmaPay";
@@ -57,6 +58,13 @@ function App() {
                     >
                       Customers
                     </Link>
+
+                    <Link
+                      to="/sales"
+                      className="text-white hover:text-gray-300 mx-4"
+                    >
+                      Sales
+                    </Link>
                   </>
                 ) : null}
 
@@ -84,6 +92,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/customers" element={<Customers />} />
+        <Route path="/sales" element={<Sales />} />
       </Routes>
     </>
   );
