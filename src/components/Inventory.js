@@ -20,7 +20,6 @@ function Inventory({ bill }) {
 
   const addToCart = (item) => {
     if (bill.soldItems.length >= 1) {
-      scrollToBottom();
       setInfoMessage("You need to close or discard the current bill first");
       setShowNotification(true);
       return;
@@ -39,13 +38,6 @@ function Inventory({ bill }) {
   const filteredInventory = inventory.filter((item) =>
     item.name.toLowerCase().includes(searchInventoryTerms)
   );
-
-  const scrollToBottom = () => {
-    window.scroll({
-      top: document.documentElement.scrollHeight,
-      behavior: "smooth",
-    });
-  };
 
   return (
     <div className="bg-white p-8 w-full">
