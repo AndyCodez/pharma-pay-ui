@@ -36,7 +36,6 @@ const Inventory = () => {
       return;
     }
 
-    setInfoMessage("");
   });
 
   const fetchInventory = async () => {
@@ -87,7 +86,9 @@ const Inventory = () => {
       setItemName("");
       setItemPrice("");
       setItemQuantity("");
-      setInfoMessage("");
+
+      setInfoMessage("Item added successfully")
+      setShowNotification(true);
     } catch (err) {
       if (err?.response?.status === 400) {
         const errorResponse = JSON.parse(JSON.stringify(err?.response?.data));
@@ -159,7 +160,6 @@ const Inventory = () => {
 
   const emptyEditField = () => {
     populateEditField({ id: "", name: "", price: "", quantity: "" });
-    setInfoMessage("");
   };
 
   const scrollToTop = () => {

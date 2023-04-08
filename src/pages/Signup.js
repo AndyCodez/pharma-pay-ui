@@ -77,12 +77,7 @@ function Signup() {
       return;
     }
     userRef.current.focus();
-    setInfoMessage("");
   }, []);
-
-  useEffect(() => {
-    setInfoMessage("");
-  }, [firstName, lastName, email, password, role]);
 
   return (
     <>
