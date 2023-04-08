@@ -4,9 +4,10 @@ import Checkout from "./pages/Checkout";
 import Inventory from "./pages/Inventory";
 import Login from "./pages/Login";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
-import Signup from "./pages/Signup";
+import Signup from "./pages/Pharmacists";
 import Customers from "./pages/Customers";
 import Sales from "./pages/Sales";
+import Pharmacists from "./pages/Pharmacists";
 
 function App() {
   document.title = "PharmaPay";
@@ -47,7 +48,7 @@ function App() {
                       </Link>
 
                       <Link
-                        to="/signup"
+                        to="/pharmacists"
                         className="text-white hover:text-gray-300 mx-4"
                       >
                         Pharmacists
@@ -101,7 +102,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/pharmacists" element={<Pharmacists />} />
         <Route path="/customers" element={<Customers />} />
         <Route path="/sales" element={<Sales />} />
       </Routes>

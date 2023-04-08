@@ -9,7 +9,7 @@ const apiVersion = "/api/v1";
 
 const SIGNUP_URL = `${apiVersion}/pharmacists`;
 
-function Signup() {
+function Pharmacists() {
   const { auth } = useAuth();
   const { authToken, role } = auth;
   const { infoMessage, setInfoMessage, showNotification, setShowNotification } =
@@ -239,4 +239,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default Pharmacists;
