@@ -41,7 +41,6 @@ const Sales = () => {
                 withCredentials: true,
             });
             setBills(response.data.bills);
-            console.log(response)
 
         } catch (err) {
             if (err?.response?.status === 400) {
