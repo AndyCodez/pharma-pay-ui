@@ -24,11 +24,12 @@ function Signup() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userRole, setUserRole] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [userRole, setUserRole] = useState("NORMAL_PHARMACIST");
+  const [pharmacists, setPharmacists] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(userRole);
 
     try {
       const response = await axios.post(
@@ -38,7 +39,7 @@ function Signup() {
           lastName,
           email,
           password,
-          role: role.toUpperCase(),
+          role: userRole,
         }),
         {
           headers: {
@@ -53,8 +54,11 @@ function Signup() {
       setLastName("");
       setEmail("");
       setPassword("");
-      setUserRole("");
-      setSuccess(true);
+      setUserRole("NORMAL_PHARMACIST");
+
+      setInfoMessage("Created successfully");
+      setShowNotification(true);
+      fetchPharmacists();
     } catch (err) {
       if (!err?.response) {
         setInfoMessage("No Server Response");
@@ -73,7 +77,31 @@ function Signup() {
       return;
     }
     userRef.current.focus();
+
+    fetchPharmacists();
   }, []);
+
+  const fetchPharmacists = async () => {
+    try {
+      const response = await axios.get(`${apiVersion}/pharmacists`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+        withCredentials: true,
+      });
+      setPharmacists(response.data);
+    } catch (err) {
+      if (err?.response?.status === 400) {
+        const errorResponse = JSON.parse(JSON.stringify(err?.response?.data));
+        setInfoMessage(errorResponse.errorMessages);
+      } else {
+        setInfoMessage("Failed to load data");
+      }
+
+      setShowNotification(true);
+    }
+  };
 
   return (
     <>
@@ -85,7 +113,7 @@ function Signup() {
         />
       ) : null}
       {authToken && role === "ADMIN" ? (
-        <div className="max-w-lg mx-auto">
+        <div className="max-w-lg mx-auto p-4">
           <h1 className="text-2xl font-bold mb-4 text-center">
             Register Pharmacist
           </h1>
@@ -151,14 +179,24 @@ function Signup() {
               <label htmlFor="role" className="block font-medium mb-1">
                 Role
               </label>
-              <input
-                type="text"
+              <select
                 id="role"
                 onChange={(e) => setUserRole(e.target.value)}
                 value={userRole}
                 required
                 className="w-full px-3 py-2 rounded-lg border-gray-300 shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
-              />
+              >
+                <option value="">Select Role</option>
+                <option value="ADMIN" onSelect={() => setUserRole("ADMIN")}>
+                  Admin
+                </option>
+                <option
+                  value="NORMAL_PHARMACIST"
+                  onSelect={() => setUserRole("NORMAL_PHARMACIST")}
+                >
+                  Normal Pharmacist
+                </option>
+              </select>
             </div>
 
             <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
@@ -167,6 +205,36 @@ function Signup() {
           </form>
         </div>
       ) : null}
+
+      <div className="p-4">
+        <h1 className="text-3xl font-bold mb-4 text-center">PharmaPay</h1>
+        <h1 className="text-2xl font-bold mb-4 text-center">Pharmacists</h1>
+      </div>
+
+      <table className="w-full text-center">
+        <thead>
+          <tr>
+            <th>First name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Created Date</th>
+            <th>Created By</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pharmacists.map((pharmacist) => (
+            <tr key={pharmacist.id}>
+              <td>{pharmacist.firstName}</td>
+              <td>{pharmacist.lastName}</td>
+              <td>{pharmacist.email}</td>
+              <td>{pharmacist.role}</td>
+              <td>{new Date(pharmacist.createdDate).toLocaleString()}</td>
+              <td>{pharmacist.createdBy}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </>
   );
 }
