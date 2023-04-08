@@ -224,7 +224,7 @@ function Pharmacists() {
         </thead>
         <tbody>
           {pharmacists.map((pharmacist) => (
-            <tr key={pharmacist.id}>
+            <tr key={pharmacist.email}>
               <td>{pharmacist.firstName}</td>
               <td>{pharmacist.lastName}</td>
               <td>{pharmacist.email}</td>
