@@ -5,6 +5,7 @@ import Inventory from "./pages/Inventory";
 import Login from "./pages/Login";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import Signup from "./pages/Signup";
+import Customers from "./pages/Customers";
 
 function App() {
   const { auth, setAuth } = useAuth();
@@ -47,6 +48,13 @@ function App() {
                     >
                       Pharmacists
                     </Link>
+
+                    <Link
+                      to="/customers"
+                      className="text-white hover:text-gray-300 mx-4"
+                    >
+                      Customers
+                    </Link>
                   </>
                 ) : null}
 
@@ -73,6 +81,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/customers" element={<Customers />} />
       </Routes>
     </>
   );
